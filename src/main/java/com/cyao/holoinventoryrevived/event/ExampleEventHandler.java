@@ -1,6 +1,6 @@
-package com.example.modtemplate.event;
+package com.cyao.holoinventoryrevived.event;
 
-import com.example.modtemplate.HoloinventoryRevived;
+import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Objects;

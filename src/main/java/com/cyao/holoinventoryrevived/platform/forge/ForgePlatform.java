@@ -1,8 +1,8 @@
-package com.example.modtemplate.platform.forge;
+package com.cyao.holoinventoryrevived.platform.forge;
 
 //? forge {
 
-/*import com.example.modtemplate.platform.Platform;
+/*import com.cyao.holoinventoryrevived.platform.Platform;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 

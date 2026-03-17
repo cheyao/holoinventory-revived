@@ -1,6 +1,6 @@
-package com.example.modtemplate.mixin;
+package com.cyao.holoinventoryrevived.mixin;
 
-import com.example.modtemplate.HoloinventoryRevived;
+import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;

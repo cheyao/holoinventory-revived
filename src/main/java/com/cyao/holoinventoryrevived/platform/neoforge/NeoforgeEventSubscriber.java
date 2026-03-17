@@ -1,8 +1,8 @@
-package com.example.modtemplate.platform.neoforge;
+package com.cyao.holoinventoryrevived.platform.neoforge;
 
 //? neoforge {
 
-/*import com.example.modtemplate.event.ExampleEventHandler; // sample_content
+/*import com.cyao.holoinventoryrevived.event.ExampleEventHandler; // sample_content
 import net.minecraft.server.level.ServerPlayer; // sample_content
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

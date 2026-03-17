@@ -1,12 +1,11 @@
-package com.example.modtemplate.platform.fabric.datagen;
+package com.cyao.holoinventoryrevived.platform.fabric.datagen;
 
 //? fabric && != 1.19.2 {
 
-import com.example.modtemplate.HoloinventoryRevived;
+import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;

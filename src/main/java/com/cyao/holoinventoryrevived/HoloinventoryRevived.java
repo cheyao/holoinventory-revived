@@ -1,22 +1,21 @@
-package com.example.modtemplate;
+package com.cyao.holoinventoryrevived;
 
-import com.example.modtemplate.platform.Platform;
+import com.cyao.holoinventoryrevived.platform.Platform;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //? fabric {
-import com.example.modtemplate.platform.fabric.FabricPlatform;
+import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
 //?} neoforge {
-/*import com.example.modtemplate.platform.neoforge.NeoforgePlatform;
+/*import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
  *///?} forge {
-/*import com.example.modtemplate.platform.forge.ForgePlatform;
+/*import com.cyao.holoinventoryrevived.platform.forge.ForgePlatform;
 *///?}
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class HoloinventoryRevived {
-
-	public static final String MOD_ID = /*$ mod_id*/ "holoinventory-revived";
+	public static final String MOD_ID = /*$ mod_id*/ "holoinventoryrevived";
 	public static final String MOD_VERSION = /*$ mod_version*/ "1.0";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "HoloInventory Revived";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);

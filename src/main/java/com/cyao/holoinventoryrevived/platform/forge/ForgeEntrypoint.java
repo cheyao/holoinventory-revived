@@ -1,8 +1,8 @@
-package com.example.modtemplate.platform.forge;
+package com.cyao.holoinventoryrevived.platform.forge;
 
 //? forge {
 
-/*import com.example.modtemplate.ModTemplate;
+/*import com.cyao.holoinventoryrevived.ModTemplate;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod(ModTemplate.MOD_ID)

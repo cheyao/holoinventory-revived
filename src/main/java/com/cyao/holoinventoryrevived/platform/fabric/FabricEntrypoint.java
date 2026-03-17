@@ -1,8 +1,8 @@
-package com.example.modtemplate.platform.fabric;
+package com.cyao.holoinventoryrevived.platform.fabric;
 
 //? fabric {
 
-import com.example.modtemplate.HoloinventoryRevived;
+import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import dev.kikugie.fletching_table.annotation.fabric.Entrypoint;
 import net.fabricmc.api.ModInitializer;
 
