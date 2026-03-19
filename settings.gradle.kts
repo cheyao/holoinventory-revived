@@ -9,6 +9,7 @@ pluginManagement {
 		maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
 		maven("https://maven.parchmentmc.org") { name = "ParchmentMC" }
 		maven("https://maven.terraformersmc.com/") { name = "TerraformersMC" }
+		maven("https://maven.shedaniel.me/") { name = "Shedaniel" }
 		exclusiveContent {
 			forRepository { maven("https://api.modrinth.com/maven") { name = "Modrinth" } }
 			filter { includeGroup("maven.modrinth") }

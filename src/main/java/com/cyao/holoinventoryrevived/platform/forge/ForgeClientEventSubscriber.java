@@ -2,18 +2,17 @@ package com.cyao.holoinventoryrevived.platform.forge;
 
 //? forge {
 
-/*import com.cyao.holoinventoryrevived.ModTemplate;
+/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@Mod.EventBusSubscriber(modid = ModTemplate.MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID, value = Dist.CLIENT)
 public class ForgeClientEventSubscriber {
-
 	@SubscribeEvent
 	public static void onClientSetup(final FMLClientSetupEvent event) {
-		ModTemplate.onInitializeClient();
+		HoloinventoryRevived.onInitializeClient();
 	}
 }
 *///?}

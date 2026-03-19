@@ -29,8 +29,8 @@
     "client": [
       "${group}.${id}.platform.fabric.FabricClientEntrypoint"
     ],
-    "fabric-datagen": [
-      "${group}.${id}.platform.fabric.datagen.FabricDataGeneratorEntrypoint"
+    "modmenu": [
+      "${group}.${id}.config.HoloinventoryModMenu"
     ]
   },
   "mixins": [

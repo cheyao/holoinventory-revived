@@ -5,6 +5,9 @@ package com.cyao.holoinventoryrevived.platform.forge;
 /*import com.cyao.holoinventoryrevived.platform.Platform;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.loading.FMLPaths;
+
+import java.nio.file.Path;
 
 public class ForgePlatform implements Platform {
 
@@ -21,6 +24,11 @@ public class ForgePlatform implements Platform {
 	@Override
 	public String mcVersion() {
 		return "";
+	}
+
+	@Override
+	public Path getConfigDir() {
+		return FMLPaths.CONFIGDIR.get();
 	}
 
 	@Override

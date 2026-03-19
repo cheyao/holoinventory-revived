@@ -1,0 +1,10 @@
+{
+  "title.holoinventory.config": "HoloInventory Revived Config",
+  "category.holoinventory.general": "General Settings",
+  "option.holoinventory.control": "Control key trigger",
+  "option.holoinventory.control.details": "Sets if holding the control key show holo inventories",
+  "option.holoinventory.shift": "Shift key trigger",
+  "option.holoinventory.shift.details": "Sets if holding the shift key show holo inventories",
+  "option.holoinventory.constant": "Always active",
+  "option.holoinventory.constant.details": "If checked, holo inventories will always be shown"
+}

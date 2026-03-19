@@ -54,6 +54,7 @@ mixin {
 repositories {
 	mavenCentral()
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	strictMaven("https://maven.shedaniel.me/", "me.shedaniel.cloth") { name = "Shedaniel" }
 }
 
 dependencies {
@@ -61,6 +62,7 @@ dependencies {
 
 	implementation(libs.moulberry.mixinconstraints)
 	jarJar(libs.moulberry.mixinconstraints)
+	api("me.shedaniel.cloth:cloth-config-forge:${prop("deps.cloth")}")
 }
 
 sourceSets {
@@ -73,6 +75,14 @@ sourceSets {
 
 tasks.named("createMinecraftArtifacts") {
 	dependsOn(tasks.named("stonecutterGenerate"))
+}
+
+tasks.named<ProcessResources>("processResources") {
+	if (stonecutter.current.version == "1.19.2") {
+		from("${rootDir}/src/main/resources/assets/icon.png") {
+			into(".")
+		}
+	}
 }
 
 stonecutter {

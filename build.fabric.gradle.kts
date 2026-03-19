@@ -50,6 +50,7 @@ repositories {
 	mavenCentral()
 	strictMaven("https://maven.terraformersmc.com/", "com.terraformersmc") { name = "TerraformersMC" }
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	strictMaven("https://maven.shedaniel.me/", "me.shedaniel.cloth") { name = "Shedaniel" }
 }
 
 dependencies {
@@ -63,7 +64,10 @@ dependencies {
 	implementation(libs.moulberry.mixinconstraints)
 	include(libs.moulberry.mixinconstraints)
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
-	modLocalRuntime("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
+	modImplementation("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${prop("deps.cloth")}") {
+		exclude("net.fabricmc.fabric-api")
+	}
 }
 
 stonecutter {

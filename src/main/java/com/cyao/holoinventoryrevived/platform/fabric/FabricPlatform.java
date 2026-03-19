@@ -5,6 +5,8 @@ package com.cyao.holoinventoryrevived.platform.fabric;
 import com.cyao.holoinventoryrevived.platform.Platform;
 import net.fabricmc.loader.api.FabricLoader;
 
+import java.nio.file.Path;
+
 public class FabricPlatform implements Platform {
 
 	@Override
@@ -20,6 +22,11 @@ public class FabricPlatform implements Platform {
 	@Override
 	public String mcVersion() {
 		return FabricLoader.getInstance().getRawGameVersion();
+	}
+
+	@Override
+	public Path getConfigDir() {
+		return FabricLoader.getInstance().getConfigDir();
 	}
 
 	@Override

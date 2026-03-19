@@ -140,6 +140,11 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 
 			val dependencies = buildDependenciesBlock(isFabric, modId, extension.dependencies)
 
+			var iconPath = "assets/icon.png";
+			if (isForge && mcVersion == "1.19.2") {
+				iconPath = "icon.png";
+			}
+
 			val props = mapOf(
 				"version" to modVersion,
 				"minecraft" to mcVersion,
@@ -154,7 +159,8 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 				"homepage_url" to prop("mod.homepage_url"),
 				"sources_url" to prop("mod.sources_url"),
 				"discord_url" to prop("mod.discord_url"),
-				"dependencies" to dependencies
+				"dependencies" to dependencies,
+				"icon_path" to iconPath
 			)
 
 			when {
