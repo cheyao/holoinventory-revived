@@ -20,6 +20,14 @@ platform {
 	}
 }
 
+configurations.all {
+	if (sc.current.parsed eq "1.19.2") {
+		resolutionStrategy {
+			force("net.fabricmc:fabric-loader:0.18.4")
+		}
+	}
+}
+
 loom {
 	accessWidenerPath = rootProject.file("src/main/resources/aw/${stonecutter.current.version}.accesswidener")
 	runs.named("client") {
@@ -76,3 +84,4 @@ stonecutter {
 		replace("location()", "identifier()")
 	}
 }
+
