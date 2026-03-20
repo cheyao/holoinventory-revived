@@ -2,20 +2,27 @@ package com.cyao.holoinventoryrevived.platform.neoforge;
 
 //? neoforge {
 
-/*import com.cyao.holoinventoryrevived.event.ExampleEventHandler; // sample_content
-import net.minecraft.server.level.ServerPlayer; // sample_content
+import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 @EventBusSubscriber
 public class NeoforgeEventSubscriber {
+	@SubscribeEvent
+	public static void onClientTick(ClientTickEvent.Pre event) {
+		if (HoloinventoryRevived.xplat().isClient()) {
+			ClientEventHandler.onTick();
+		}
+	}
 
-	@SubscribeEvent // sample_content
-	public static void onPlayerDamage(LivingDamageEvent.Post event) { // sample_content
-		if (event.getEntity() instanceof ServerPlayer player && event.getNewDamage() > 0) { // sample_content
-			ExampleEventHandler.onPlayerHurt(player); // sample_content
-		} // sample_content
-	} // sample_content
+	@SubscribeEvent
+	public static void onDrawLast(RenderLevelStageEvent event) {
+		if (HoloinventoryRevived.xplat().isClient()) {
+			ClientEventHandler.onRender();
+		}
+	}
 }
-*///?}
+//?}

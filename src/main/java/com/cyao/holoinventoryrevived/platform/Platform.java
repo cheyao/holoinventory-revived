@@ -11,6 +11,8 @@ public interface Platform {
 
 	Path getConfigDir();
 
+	boolean isClient();
+
 	boolean isDevelopmentEnvironment();
 
 	default boolean isDebug() {

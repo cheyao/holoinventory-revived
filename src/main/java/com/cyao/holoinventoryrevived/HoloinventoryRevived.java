@@ -11,10 +11,10 @@ import java.io.File;
 import java.io.IOException;
 
 //? fabric {
-import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
-//?} neoforge {
-/*import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
-*///?} forge {
+/*import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
+*///?} neoforge {
+import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
+//?} forge {
 /*import com.cyao.holoinventoryrevived.platform.forge.ForgePlatform;
 *///?}
 
@@ -55,10 +55,10 @@ public class HoloinventoryRevived {
 
 	private static Platform createPlatformInstance() {
 		//? fabric {
-		return new FabricPlatform();
-		//?} neoforge {
-		/*return new NeoforgePlatform();
-		 *///?} forge {
+		/*return new FabricPlatform();
+		*///?} neoforge {
+		return new NeoforgePlatform();
+		 //?} forge {
 		/*return new ForgePlatform();
 		*///?}
 	}

@@ -42,9 +42,9 @@ public class ConfigScreenProvider {
 			TomlWriter tomlWriter = new TomlWriter();
 			try {
 				tomlWriter.write(CONFIG, CONFIG_FILE);
-				HoloinventoryRevived.LOGGER.error("Successfully save config to file");
+				HoloinventoryRevived.LOGGER.info("Successfully saved configuration to file");
 			} catch (IOException e) {
-				HoloinventoryRevived.LOGGER.error("Failed to save to config file: {}", e.toString());
+				HoloinventoryRevived.LOGGER.info("Failed to save to config file: {}", e.toString());
 			}
 		});
 

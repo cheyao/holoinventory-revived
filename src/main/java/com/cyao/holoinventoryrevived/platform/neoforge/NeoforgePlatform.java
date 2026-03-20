@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.neoforge;
 
 //? neoforge {
 
-/*import com.cyao.holoinventoryrevived.platform.Platform;
+import com.cyao.holoinventoryrevived.platform.Platform;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.fml.loading.FMLLoader;
@@ -33,8 +33,13 @@ public class NeoforgePlatform implements Platform {
 	}
 
 	@Override
+	public boolean isClient() {
+		return FMLLoader.getDist().isClient();
+	}
+
+	@Override
 	public boolean isDevelopmentEnvironment() {
-		return !FMLLoader/^? if > 1.21.7 {^//^.getCurrent()^//^?}^/.isProduction();
+		return !FMLLoader/*? if > 1.21.7 {*//*.getCurrent()*//*?}*/.isProduction();
 	}
 }
-*///?}
+//?}

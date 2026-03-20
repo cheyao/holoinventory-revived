@@ -32,6 +32,11 @@ public class ForgePlatform implements Platform {
 	}
 
 	@Override
+	public boolean isClient() {
+		return FMLEnvironment.dist.isClient();
+	}
+
+	@Override
 	public boolean isDevelopmentEnvironment() {
 		return !FMLLoader.isProduction();
 	}
