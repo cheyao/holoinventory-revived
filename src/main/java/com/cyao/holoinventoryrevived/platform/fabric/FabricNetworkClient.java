@@ -5,18 +5,22 @@ package com.cyao.holoinventoryrevived.platform.fabric;
 import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import com.cyao.holoinventoryrevived.network.NetworkClient;
+import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
+import net.minecraft.world.Nameable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -35,12 +39,13 @@ public class FabricNetworkClient implements NetworkClient {
 		}
 	}
 
-	public record InventoryContentsS2CPayload(BlockPos pos, List<ItemStack> items) implements CustomPacketPayload {
+	public record InventoryContentsS2CPayload(BlockPos pos, List<ItemStack> items, String name) implements CustomPacketPayload {
 		public static final ResourceLocation GET_INVENTORY_PAYLOAD_ID = ResourceLocation.fromNamespaceAndPath(HoloinventoryRevived.MOD_ID, "inventory_contents");
 		public static final Type<InventoryContentsS2CPayload> ID = new Type<>(GET_INVENTORY_PAYLOAD_ID);
 		public static final StreamCodec<RegistryFriendlyByteBuf, InventoryContentsS2CPayload> CODEC = StreamCodec.composite(
 				BlockPos.STREAM_CODEC, InventoryContentsS2CPayload::pos,
 				ItemStack.LIST_STREAM_CODEC, InventoryContentsS2CPayload::items,
+				ByteBufCodecs.STRING_UTF8, InventoryContentsS2CPayload::name,
 				InventoryContentsS2CPayload::new);
 
 		@NotNull
@@ -72,7 +77,12 @@ public class FabricNetworkClient implements NetworkClient {
 					}
 				}
 
-				InventoryContentsS2CPayload response = new InventoryContentsS2CPayload(payload.pos, items);
+				String name = block.getBlockState().getBlock().getName().toString();
+				if (block instanceof Nameable nameable) {
+					name = nameable.getDisplayName().getString();
+				}
+
+				InventoryContentsS2CPayload response = new InventoryContentsS2CPayload(payload.pos, items, name);
 				ServerPlayNetworking.send(context.player(), response);
 			});
 	}
@@ -86,7 +96,7 @@ public class FabricNetworkClient implements NetworkClient {
 					return;
 				}
 
-				ClientEventHandler.cacheBlock(payload.pos, payload.items);
+				ClientEventHandler.cacheBlock(payload.pos, payload.items, payload.name);
 			});
 	}
 

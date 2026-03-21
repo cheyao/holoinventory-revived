@@ -6,6 +6,7 @@ import com.cyao.holoinventoryrevived.renderers.InventoryRenderer;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ClientEventHandler {
 	private static WeakReference<Level> worldptr = new WeakReference<>(null);
-	private static final Cache<BlockPos, List<ItemStack>> BLOCK_CACHE =
+	private static final Cache<BlockPos, Pair<List<ItemStack>, String>> BLOCK_CACHE =
 			Caffeine.newBuilder().maximumSize(20).expireAfterWrite(5, TimeUnit.SECONDS).build();
 
 	public static void onTick() {
@@ -95,15 +96,15 @@ public class ClientEventHandler {
 			return;
 		}
 
-		List<ItemStack> items = BLOCK_CACHE.getIfPresent(hitPos);
+		Pair<List<ItemStack>, String> items = BLOCK_CACHE.getIfPresent(hitPos);
 		if (items == null) {
 			return;
 		}
 
-		InventoryRenderer.render(block, items, matrices, renderBuffer, camera);
+		InventoryRenderer.render(block, items.getFirst(), items.getSecond(), matrices, renderBuffer, camera);
 	}
 
-	public static void cacheBlock(BlockPos block, List<ItemStack> items) {
+	public static void cacheBlock(BlockPos block, List<ItemStack> items, String name) {
 		List<ItemStack> dedupedItems = new ArrayList<>(items.size());
 
 		for (ItemStack item : items) {
@@ -122,7 +123,7 @@ public class ClientEventHandler {
 			}
 		}
 
-		BLOCK_CACHE.put(block, items);
+		BLOCK_CACHE.put(block, new Pair<>(dedupedItems, name));
 
 		HoloinventoryRevived.LOGGER.debug("Cached inventory at {}", block);
 	}
