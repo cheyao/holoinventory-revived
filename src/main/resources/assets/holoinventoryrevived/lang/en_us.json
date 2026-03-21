@@ -6,5 +6,6 @@
   "option.holoinventory.shift": "Shift key trigger",
   "option.holoinventory.shift.details": "Sets if holding the shift key show holo inventories",
   "option.holoinventory.constant": "Always active",
-  "option.holoinventory.constant.details": "If checked, holo inventories will always be shown"
+  "option.holoinventory.constant.details": "If checked, holo inventories will always be shown",
+  "item.holoinventoryrevived.holo_glasses": "Holo Glasses"
 }

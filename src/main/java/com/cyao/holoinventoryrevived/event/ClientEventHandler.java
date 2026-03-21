@@ -13,9 +13,11 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.EnderChestBlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -29,6 +31,17 @@ public class ClientEventHandler {
 	private static WeakReference<Level> worldptr = new WeakReference<>(null);
 	private static final Cache<BlockPos, Pair<List<ItemStack>, String>> BLOCK_CACHE =
 			Caffeine.newBuilder().maximumSize(20).expireAfterWrite(5, TimeUnit.SECONDS).build();
+	private static final Cache<BlockPos, Boolean> REQUESTED =
+			Caffeine.newBuilder().maximumSize(20).expireAfterWrite(250, TimeUnit.MILLISECONDS).build();
+
+	// Turn off mod according to config settings
+	private static boolean modEnabled(Player player) {
+		Config config = HoloinventoryRevived.CONFIG;
+		return ((config.ALWAYS_ACTIVE) ||
+				(config.CONTROL_TRIGGER && Screen.hasControlDown()) ||
+				(config.SHIFT_TRIGGER && Screen.hasShiftDown())) ||
+				(player.getInventory().getArmor(3).is(HoloinventoryRevived.HOLO_GLASSES_ITEM));
+	}
 
 	public static void onTick() {
 		Minecraft minecraft = Minecraft.getInstance();
@@ -48,7 +61,9 @@ public class ClientEventHandler {
 			return; // We need to re-cache
 		}
 
-		// TODO: Check if mod is enabled or not
+		if (!modEnabled(minecraft.player)) {
+			return;
+		}
 
 		HitResult hit = minecraft.hitResult;
 		if (hit == null || hit.getType() != HitResult.Type.BLOCK) {
@@ -56,15 +71,18 @@ public class ClientEventHandler {
 		}
 
 		// Limit updating to once per 0.6 seconds
-		// TODO: Configurable value
-		// TODO: Only re-send packet once every n seconds to account for latency
 		BlockPos hitPos = ((BlockHitResult) hit).getBlockPos();
 		BlockEntity block = minecraft.level.getBlockEntity(hitPos);
-		if (!(block instanceof Container) || (BLOCK_CACHE.getIfPresent(hitPos) != null &&
-				(BLOCK_CACHE.policy().expireAfterWrite().get().ageOf(hitPos).get().compareTo(Duration.ofMillis(750)) < 0))) {
+		if (!(block instanceof Container || block instanceof EnderChestBlockEntity) ||
+				(REQUESTED.getIfPresent(hitPos) != null) ||
+				(BLOCK_CACHE.getIfPresent(hitPos) != null &&
+						(BLOCK_CACHE.policy().expireAfterWrite().get().ageOf(hitPos)
+								.get().compareTo(Duration.ofMillis(750)) < 0))) {
 			return; // We ain't staring at a container
 		}
 
+		// Limit packets to one every 0.25s to help with server load
+		REQUESTED.put(hitPos, true);
 		HoloinventoryRevived.xnetwork().cacheInventory(hitPos);
 	}
 
@@ -77,11 +95,7 @@ public class ClientEventHandler {
 			return;
 		}
 
-		// Turn off mod according to config settings
-		Config config = HoloinventoryRevived.CONFIG;
-		if (!(config.ALWAYS_ACTIVE ||
-				(config.CONTROL_TRIGGER && Screen.hasControlDown()) ||
-				(config.SHIFT_TRIGGER && Screen.hasShiftDown()))) {
+		if (!modEnabled(minecraft.player)) {
 			return;
 		}
 
@@ -92,7 +106,7 @@ public class ClientEventHandler {
 
 		BlockPos hitPos = ((BlockHitResult) hit).getBlockPos();
 		BlockEntity block = minecraft.level.getBlockEntity(hitPos);
-		if (!(block instanceof Container)) {
+		if (!(block instanceof Container || block instanceof EnderChestBlockEntity)) {
 			return;
 		}
 

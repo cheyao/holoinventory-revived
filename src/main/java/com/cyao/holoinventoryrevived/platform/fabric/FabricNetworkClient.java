@@ -17,11 +17,8 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.Nameable;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EnderChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.EnderChestBlockEntity;
 import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
@@ -72,38 +69,38 @@ public class FabricNetworkClient implements NetworkClient {
 
 				String name = "";
 
-				switch (block) {
-					case null -> {
-						HoloinventoryRevived.LOGGER.debug("Received invalid request: {}", payload.pos);
-
-						return;
-					}
-					case EnderChestBlockEntity ignored -> {
-						for (ItemStack item : context.player().getEnderChestInventory().items) {
-							if (!item.isEmpty()) {
-								items.add(item);
-							}
+				if (block == null) {
+					HoloinventoryRevived.LOGGER.debug("Received invalid request: {}", payload.pos);
+					return;
+				} else if (block instanceof EnderChestBlockEntity) {
+					for (ItemStack item : context.player().getEnderChestInventory().items) {
+						if (!item.isEmpty()) {
+							items.add(item);
 						}
 					}
-					case JukeboxBlockEntity jukebox -> {
+
+					name = Items.ENDER_CHEST.getDefaultInstance().getDisplayName().getString();
+				} else if (block instanceof JukeboxBlockEntity jukebox) {
+					if (!jukebox.getTheItem().isEmpty()) {
 						items.add(jukebox.getTheItem());
-
-						name = Items.JUKEBOX.getDefaultInstance().getDisplayName().getString();
 					}
-					case Container container -> {
-						for (int i = 0; i < container.getContainerSize(); ++i) {
-							ItemStack item = container.getItem(i);
 
-							if (!item.isEmpty()) {
-								items.add(item);
-							}
+					name = Items.JUKEBOX.getDefaultInstance().getDisplayName().getString();
+				} else if (block instanceof Container container) {
+					for (int i = 0; i < container.getContainerSize(); ++i) {
+						ItemStack item = container.getItem(i);
+
+						if (!item.isEmpty()) {
+							items.add(item);
 						}
-					}
-					default -> {
 					}
 				}
 
-				if (name.equals("")) {
+				if (items.isEmpty()) {
+					return;
+				}
+
+				if (name == null || name.isEmpty()) {
 					if (block instanceof Nameable nameable) {
 						name = nameable.getDisplayName().getString();
 					} else {
@@ -111,7 +108,8 @@ public class FabricNetworkClient implements NetworkClient {
 					}
 				}
 
-				response = new InventoryContentsS2CPayload(payload.pos, items, name);
+				response = new InventoryContentsS2CPayload(payload.pos, items, name
+						.replace("[", "").replace("]", ""));
 				ServerPlayNetworking.send(context.player(), response);
 			});
 	}

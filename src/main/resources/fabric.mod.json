@@ -31,8 +31,5 @@
     "modmenu": [
       "${group}.${id}.config.HoloinventoryModMenu"
     ]
-  },
-  "mixins": [
-    "${id}.mixins.json"
-  ],${dependencies}
+  },${dependencies}
 }

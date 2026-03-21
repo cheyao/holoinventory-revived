@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" g ",
+		"gGg",
+		" g "
+	],
+	"key": {
+		"g": {
+			"item": "minecraft:gold_ingot"
+		},
+		"G": {
+			//? if >= 1.17 {
+			"item": "minecraft:spyglass",
+			//? } else {
+			/*"item": "minecraft:glass_pane",
+			*///? }
+		}
+	},
+	"result": {
+		"id": "holoinventoryrevived:holo_glasses",
+		"count": 1
+	}
+}

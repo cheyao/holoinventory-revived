@@ -1,14 +1,12 @@
 package com.cyao.holoinventoryrevived.renderers;
 
-import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.ChatComponent;
-import net.minecraft.client.player.inventory.Hotbar;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -33,8 +31,9 @@ public class InventoryRenderer {
 		}
 		matrices.scale(0.45f, 0.45f, 0.45f);
 
+
 		matrices.rotateAround(Axis.YP.rotationDegrees((float) (360 * (System.currentTimeMillis() & 0x3FFFL) / (double) 0x3FFFL)), 0, 0, 0);
-		renderer.render(item, ItemDisplayContext.FIXED, false, matrices, renderBuffer, 0xFFFFFF, OverlayTexture.NO_OVERLAY, blockModel);
+		renderer.render(item, ItemDisplayContext.FIXED, false, matrices, renderBuffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, blockModel);
 		matrices.popPose();
 	}
 
@@ -58,7 +57,7 @@ public class InventoryRenderer {
 		textRenderer.drawInBatch(size,
 				(float) -(width / 2.0f), 0f, 0xFFFFFFFF,
 				true, matrices.last().pose(), renderBuffer,
-				Font.DisplayMode.POLYGON_OFFSET, 0, 0x00FF00FF);
+				Font.DisplayMode.POLYGON_OFFSET, 0, LightTexture.FULL_BRIGHT);
 		matrices.popPose();
 	}
 
