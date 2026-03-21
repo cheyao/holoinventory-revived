@@ -1,6 +1,7 @@
 package com.cyao.holoinventoryrevived;
 
 import com.cyao.holoinventoryrevived.config.Config;
+import com.cyao.holoinventoryrevived.network.NetworkClient;
 import com.cyao.holoinventoryrevived.platform.Platform;
 
 import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.Toml;
@@ -8,13 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 
 //? fabric {
-/*import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
-*///?} neoforge {
-import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
-//?} forge {
+import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
+import com.cyao.holoinventoryrevived.platform.fabric.FabricNetworkClient;
+//?} neoforge {
+/*import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
+*///?} forge {
 /*import com.cyao.holoinventoryrevived.platform.forge.ForgePlatform;
 *///?}
 
@@ -29,11 +30,13 @@ public class HoloinventoryRevived {
 	public static Config CONFIG;
 
 	private static final Platform PLATFORM = createPlatformInstance();
+	private static final NetworkClient NETWORK = createNetworkInstance();
 
 	public static void onInitialize() {
 		LOGGER.info("Initializing {} on {}", MOD_ID, HoloinventoryRevived.xplat().loader());
 		LOGGER.debug("{}: { version: {}; friendly_name: {} }", MOD_ID, MOD_VERSION, MOD_FRIENDLY_NAME);
 
+		// Read in config file if it exists
 		CONFIG_FILE = HoloinventoryRevived.xplat().getConfigDir().resolve("holoinventory-revived.toml").toFile();
 		if (CONFIG_FILE.exists()) {
 			LOGGER.info("Reading config from {}", CONFIG_FILE);
@@ -53,13 +56,27 @@ public class HoloinventoryRevived {
 		return PLATFORM;
 	}
 
+	public static NetworkClient xnetwork() {
+		return NETWORK;
+	}
+
 	private static Platform createPlatformInstance() {
 		//? fabric {
-		/*return new FabricPlatform();
-		*///?} neoforge {
-		return new NeoforgePlatform();
-		 //?} forge {
+		return new FabricPlatform();
+		//?} neoforge {
+		/*return new NeoforgePlatform();
+		 *///?} forge {
 		/*return new ForgePlatform();
 		*///?}
+	}
+
+	private static NetworkClient createNetworkInstance() {
+		//? fabric {
+		return new FabricNetworkClient();
+		//?} neoforge {
+		/*return new NeoforgePlatform();
+		 *///?} forge {
+		/*return new ForgePlatform();
+		 *///?}
 	}
 }

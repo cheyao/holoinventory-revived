@@ -29,7 +29,6 @@ configurations.all {
 }
 
 loom {
-	accessWidenerPath = rootProject.file("src/main/resources/aw/${stonecutter.current.version}.accesswidener")
 	runs.named("client") {
 		client()
 		ideConfigGenerated(true)
@@ -76,6 +75,9 @@ dependencies {
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${prop("deps.cloth")}") {
 		exclude("net.fabricmc.fabric-api")
 	}
+
+	// Cache library
+	implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
 }
 
 stonecutter {

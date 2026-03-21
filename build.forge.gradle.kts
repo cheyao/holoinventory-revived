@@ -18,12 +18,6 @@ platform {
 legacyForge {
 	version = "${property("deps.minecraft")}-${property("deps.forge")}"
 
-	validateAccessTransformers = true
-
-	accessTransformers.from(
-		rootProject.file("src/main/resources/aw/${stonecutter.current.version}.cfg")
-	)
-
 	runs {
 		register("client") {
 			client()
@@ -63,6 +57,9 @@ dependencies {
 	implementation(libs.moulberry.mixinconstraints)
 	jarJar(libs.moulberry.mixinconstraints)
 	api("me.shedaniel.cloth:cloth-config-forge:${prop("deps.cloth")}")
+
+	// Cache library
+	implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
 }
 
 sourceSets {

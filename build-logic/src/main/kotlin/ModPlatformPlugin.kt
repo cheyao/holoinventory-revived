@@ -166,17 +166,17 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 			when {
 				isFabric -> {
 					filesMatching("fabric.mod.json") { expand(props) }
-					exclude("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "aw/*.cfg", ".cache", "pack.mcmeta")
+					exclude("META-INF/mods.toml", "META-INF/neoforge.mods.toml", ".cache", "pack.mcmeta")
 				}
 
 				isNeoForge -> {
 					filesMatching("META-INF/neoforge.mods.toml") { expand(props) }
-					exclude("META-INF/mods.toml", "fabric.mod.json", "aw/*.accesswidener", ".cache", "pack.mcmeta")
+					exclude("META-INF/mods.toml", "fabric.mod.json", ".cache", "pack.mcmeta")
 				}
 
 				isForge -> {
 					filesMatching("META-INF/mods.toml") { expand(props) }
-					exclude("META-INF/neoforge.mods.toml", "fabric.mod.json", "aw/*.accesswidener", ".cache")
+					exclude("META-INF/neoforge.mods.toml", "fabric.mod.json", ".cache")
 				}
 			}
 		}

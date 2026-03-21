@@ -1,7 +1,15 @@
 package com.cyao.holoinventoryrevived.event;
 
 import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+import com.cyao.holoinventoryrevived.config.Config;
+import com.cyao.holoinventoryrevived.renderers.InventoryRenderer;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -9,12 +17,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 
 import java.lang.ref.WeakReference;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ClientEventHandler {
 	private static WeakReference<Level> worldptr = new WeakReference<>(null);
+	private static final Cache<BlockPos, List<ItemStack>> BLOCK_CACHE =
+			Caffeine.newBuilder().maximumSize(20).expireAfterWrite(5, TimeUnit.SECONDS).build();
 
 	public static void onTick() {
 		Minecraft minecraft = Minecraft.getInstance();
@@ -29,7 +42,7 @@ public class ClientEventHandler {
 		// Caching
 		Level cachedWorld = worldptr.get();
 		if (cachedWorld == null || currentWorld != cachedWorld) {
-			// TODO: Re-cache
+			BLOCK_CACHE.cleanUp();
 			worldptr = new WeakReference<>(currentWorld);
 			return; // We need to re-cache
 		}
@@ -37,18 +50,24 @@ public class ClientEventHandler {
 		// TODO: Check if mod is enabled or not
 
 		HitResult hit = minecraft.hitResult;
-		if (hit == null || hit.getType() != HitResult.Type.BLOCK || minecraft.crosshairPickEntity == null) {
+		if (hit == null || hit.getType() != HitResult.Type.BLOCK) {
 			return;
 		}
 
-		BlockEntity block = currentWorld.getBlockEntity(minecraft.crosshairPickEntity.blockPosition());
-
-		if (!(block instanceof Container)) {
+		// Limit updating to once per 0.6 seconds
+		// TODO: Configurable value
+		// TODO: Only re-send packet once every n seconds to account for latency
+		BlockPos hitPos = ((BlockHitResult) hit).getBlockPos();
+		BlockEntity block = minecraft.level.getBlockEntity(hitPos);
+		if (!(block instanceof Container) || (BLOCK_CACHE.getIfPresent(hitPos) != null &&
+				(BLOCK_CACHE.policy().expireAfterWrite().get().ageOf(hitPos).get().compareTo(Duration.ofMillis(750)) < 0))) {
 			return; // We ain't staring at a container
 		}
+
+		HoloinventoryRevived.xnetwork().cacheInventory(hitPos);
 	}
 
-	public static void onRender() {
+	public static void onRender(PoseStack matrices, MultiBufferSource renderBuffer, Camera camera) {
 		if (worldptr.get() == null) {
 			return;
 		}
@@ -57,26 +76,54 @@ public class ClientEventHandler {
 			return;
 		}
 
+		// Turn off mod according to config settings
+		Config config = HoloinventoryRevived.CONFIG;
+		if (!(config.ALWAYS_ACTIVE ||
+				(config.CONTROL_TRIGGER && Screen.hasControlDown()) ||
+				(config.SHIFT_TRIGGER && Screen.hasShiftDown()))) {
+			return;
+		}
+
 		HitResult hit = minecraft.hitResult;
 		if (hit == null || hit.getType() != HitResult.Type.BLOCK) {
 			return;
 		}
 
-		BlockEntity block = minecraft.level.getBlockEntity(((BlockHitResult) hit).getBlockPos());
-		if (!(block instanceof Container container)) {
+		BlockPos hitPos = ((BlockHitResult) hit).getBlockPos();
+		BlockEntity block = minecraft.level.getBlockEntity(hitPos);
+		if (!(block instanceof Container)) {
 			return;
 		}
-		int size = container.getContainerSize();
 
-		StringBuilder items = new StringBuilder();
-		for (int i = 0; i < size; ++i) {
-			ItemStack item = container.getItem(i);
-			HoloinventoryRevived.LOGGER.info("{} {}",i, item);
-			if (!item.isEmpty()) {
-				items.append(item.getDisplayName().getString()).append(" ");
+		List<ItemStack> items = BLOCK_CACHE.getIfPresent(hitPos);
+		if (items == null) {
+			return;
+		}
+
+		InventoryRenderer.render(block, items, matrices, renderBuffer, camera);
+	}
+
+	public static void cacheBlock(BlockPos block, List<ItemStack> items) {
+		List<ItemStack> dedupedItems = new ArrayList<>(items.size());
+
+		for (ItemStack item : items) {
+			boolean merged = false;
+			for (ItemStack content : dedupedItems) {
+				if (ItemStack.isSameItem(item, content)) {
+					content.grow(item.getCount());
+
+					merged = true;
+					break;
+				}
+			}
+
+			if (!merged) {
+				dedupedItems.add(item);
 			}
 		}
 
-		HoloinventoryRevived.LOGGER.info("Found inventory of size {} with {}", size, items);
+		BLOCK_CACHE.put(block, items);
+
+		HoloinventoryRevived.LOGGER.debug("Cached inventory at {}", block);
 	}
 }

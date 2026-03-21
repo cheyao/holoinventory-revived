@@ -17,8 +17,6 @@ platform {
 
 neoForge {
 	version = property("deps.neoforge") as String
-	accessTransformers.from(rootProject.file("src/main/resources/aw/${stonecutter.current.version}.cfg"))
-	validateAccessTransformers = true
 
 	if (hasProperty("deps.parchment")) parchment {
 		val (mc, ver) = (property("deps.parchment") as String).split(':')
@@ -58,6 +56,9 @@ dependencies {
 	implementation(libs.moulberry.mixinconstraints)
 	jarJar(libs.moulberry.mixinconstraints)
 	api("me.shedaniel.cloth:cloth-config-neoforge:${prop("deps.cloth")}")
+
+	// Cache library
+	implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
 }
 
 tasks.named("createMinecraftArtifacts") {
