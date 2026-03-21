@@ -5,7 +5,6 @@ package com.cyao.holoinventoryrevived.platform.fabric;
 import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import com.cyao.holoinventoryrevived.network.NetworkClient;
-import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -18,9 +17,14 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.Nameable;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EnderChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.EnderChestBlockEntity;
+import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -61,28 +65,53 @@ public class FabricNetworkClient implements NetworkClient {
 
 		ServerPlayNetworking.registerGlobalReceiver(GetInventoryC2SPayload.ID,
 			(payload, context) -> {
+				InventoryContentsS2CPayload response;
+
 				BlockEntity block = context.player().level().getBlockEntity(payload.pos);
-
-				if (!(block instanceof Container container)) {
-					return;
-				}
-
 				List<ItemStack> items = new ArrayList<>();
-				int size = container.getContainerSize();
-				for (int i = 0; i < size; ++i) {
-					ItemStack item = container.getItem(i);
 
-					if (!item.isEmpty()) {
-						items.add(item);
+				String name = "";
+
+				switch (block) {
+					case null -> {
+						HoloinventoryRevived.LOGGER.debug("Received invalid request: {}", payload.pos);
+
+						return;
+					}
+					case EnderChestBlockEntity ignored -> {
+						for (ItemStack item : context.player().getEnderChestInventory().items) {
+							if (!item.isEmpty()) {
+								items.add(item);
+							}
+						}
+					}
+					case JukeboxBlockEntity jukebox -> {
+						items.add(jukebox.getTheItem());
+
+						name = Items.JUKEBOX.getDefaultInstance().getDisplayName().getString();
+					}
+					case Container container -> {
+						for (int i = 0; i < container.getContainerSize(); ++i) {
+							ItemStack item = container.getItem(i);
+
+							if (!item.isEmpty()) {
+								items.add(item);
+							}
+						}
+					}
+					default -> {
 					}
 				}
 
-				String name = block.getBlockState().getBlock().getName().toString();
-				if (block instanceof Nameable nameable) {
-					name = nameable.getDisplayName().getString();
+				if (name.equals("")) {
+					if (block instanceof Nameable nameable) {
+						name = nameable.getDisplayName().getString();
+					} else {
+						name = block.getBlockState().getBlock().getName().toString();
+					}
 				}
 
-				InventoryContentsS2CPayload response = new InventoryContentsS2CPayload(payload.pos, items, name);
+				response = new InventoryContentsS2CPayload(payload.pos, items, name);
 				ServerPlayNetworking.send(context.player(), response);
 			});
 	}
