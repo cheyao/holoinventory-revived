@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.fabric;
 
 //? fabric {
 
-import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
@@ -24,4 +24,4 @@ public class FabricEventSubscriber {
 	}
 }
 
-//?}
+*///?}

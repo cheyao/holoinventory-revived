@@ -18,16 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 //? if fabric {
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+/*import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
-//? } else if neoforge {
-/*import net.neoforged.neoforge.capabilities.Capabilities;
+*///? } else if neoforge {
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
-*///? }
+//? }
 
 public class NetworkPayloadHandler {
 	public static void getInventoryPayloadHandler(final NetworkPayloads.GetInventoryC2SPayload payload, Player player) {
@@ -38,14 +38,14 @@ public class NetworkPayloadHandler {
 		String name = "";
 
 		//? if (neoforge || forge) {
-		/*IItemHandler handler = level.getCapability(
+		IItemHandler handler = level.getCapability(
 				Capabilities.ItemHandler.BLOCK,
 				payload.pos(),
 				null
 		);
-		*///? } else {
-		Storage<ItemVariant> handler = ItemStorage.SIDED.find(level, payload.pos(), null);
-		//? }
+		//? } else {
+		/*Storage<ItemVariant> handler = ItemStorage.SIDED.find(level, payload.pos(), null);
+		*///? }
 
 		if (block == null) {
 			HoloinventoryRevived.LOGGER.debug("Received invalid request: {}", payload.pos());
@@ -64,17 +64,9 @@ public class NetworkPayloadHandler {
 			}
 
 			name = Items.JUKEBOX.getDefaultInstance().getDisplayName().getString();
-		} else if (block instanceof Container container) {
-			for (int i = 0; i < container.getContainerSize(); ++i) {
-				ItemStack item = container.getItem(i);
-
-				if (!item.isEmpty()) {
-					items.add(item);
-				}
-			}
 		} else if (handler != null) {
 			//? if fabric {
-			for (StorageView<ItemVariant> view : handler) {
+			/*for (StorageView<ItemVariant> view : handler) {
 				if (!view.isResourceBlank()) {
 					ItemVariant variant = view.getResource();
 					long amount = view.getAmount();
@@ -84,14 +76,22 @@ public class NetworkPayloadHandler {
 					}
 				}
 			}
-			//? } else {
-			/*for (int i = 0; i < handler.getSlots(); i++) {
+			*///? } else {
+			for (int i = 0; i < handler.getSlots(); i++) {
 				ItemStack item = handler.getStackInSlot(i);
 				if (!item.isEmpty()) {
 					items.add(item);
 				}
 			}
-			*///? }
+			//? }
+		} else if (block instanceof Container container) {
+			for (int i = 0; i < container.getContainerSize(); ++i) {
+				ItemStack item = container.getItem(i);
+
+				if (!item.isEmpty()) {
+					items.add(item);
+				}
+			}
 		} else {
 			HoloinventoryRevived.LOGGER.info("Failed to get inventory contents for block {}: Invalid type", payload.pos());
 		}
@@ -120,10 +120,10 @@ public class NetworkPayloadHandler {
 						name.replace("[", "").replace("]", ""));
 
 		//? if fabric {
-		ServerPlayNetworking.send((ServerPlayer) player, response);
-		//? } else if neoforge {
-		/*PacketDistributor.sendToPlayer((ServerPlayer) player, response);
-		*///? }
+		/*ServerPlayNetworking.send((ServerPlayer) player, response);
+		*///? } else if neoforge {
+		PacketDistributor.sendToPlayer((ServerPlayer) player, response);
+		//? }
 	}
 
 	public static void inventoryContentsPayloadHandler(final NetworkPayloads.InventoryContentsS2CPayload payload, Level level) {

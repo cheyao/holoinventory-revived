@@ -28,13 +28,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 //? if fabric {
-import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
+/*import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-//? } else if neoforge {
-/*import net.neoforged.neoforge.capabilities.Capabilities;
+*///? } else if neoforge {
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
-*///? }
+//? }
 
 public class ClientEventHandler {
 	private static WeakReference<Level> worldptr = new WeakReference<>(null);
@@ -61,14 +61,14 @@ public class ClientEventHandler {
 		BlockEntity block = level.getBlockEntity(pos);
 
 		//? if (neoforge || forge) {
-		/*IItemHandler handler = level.getCapability(
+		IItemHandler handler = level.getCapability(
 				Capabilities.ItemHandler.BLOCK,
 				pos,
 				null
 		);
-		*///? } else {
-		Storage<ItemVariant> handler = ItemStorage.SIDED.find(level, pos, null);
-		 //? }
+		//? } else {
+		/*Storage<ItemVariant> handler = ItemStorage.SIDED.find(level, pos, null);
+		 *///? }
 
 		return (block instanceof Container) ||
 				(block instanceof EnderChestBlockEntity) ||
