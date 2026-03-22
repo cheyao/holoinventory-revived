@@ -58,7 +58,11 @@ dependencies {
 	api("me.shedaniel.cloth:cloth-config-neoforge:${prop("deps.cloth")}")
 
 	// Cache library
-	implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
+	implementation(libs.caffeine)
+	jarJar(libs.caffeine)
+	//? if <= 1.21.8 {
+	"additionalRuntimeClasspath"(libs.caffeine)
+	//? }
 }
 
 tasks.named("createMinecraftArtifacts") {

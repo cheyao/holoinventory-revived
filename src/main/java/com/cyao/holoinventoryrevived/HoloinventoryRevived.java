@@ -5,14 +5,9 @@ import com.cyao.holoinventoryrevived.network.NetworkClient;
 import com.cyao.holoinventoryrevived.platform.Platform;
 
 import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.Toml;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.Unbreakable;
 import org.slf4j.Logger;
@@ -23,8 +18,18 @@ import java.io.File;
 //? fabric {
 import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
 import com.cyao.holoinventoryrevived.platform.fabric.FabricNetworkClient;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 //?} neoforge {
 /*import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
+import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgeNetworkClient;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredItem;
+
+import java.util.function.Supplier;
 *///?} forge {
 /*import com.cyao.holoinventoryrevived.platform.forge.ForgePlatform;
 *///?}
@@ -39,7 +44,14 @@ public class HoloinventoryRevived {
 	public static File CONFIG_FILE;
 	public static Config CONFIG;
 
+	//? if fabric {
 	public static Item HOLO_GLASSES_ITEM;
+	//? } else if neoforge {
+	/*public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(HoloinventoryRevived.MOD_ID);
+	public static final DeferredItem<ArmorItem> HOLO_GLASSES_ITEM = ITEMS.register("holo_glasses", () ->
+			new ArmorItem(ArmorMaterials.GOLD, ArmorItem.Type.HELMET,
+					new Item.Properties().component(DataComponents.UNBREAKABLE, new Unbreakable(false))));
+	*///? }
 
 	private static final Platform PLATFORM = createPlatformInstance();
 	private static final NetworkClient NETWORK = createNetworkInstance();
@@ -59,14 +71,13 @@ public class HoloinventoryRevived {
 		}
 
 		// Register our glasses item
-		ResourceLocation itemID = ResourceLocation.fromNamespaceAndPath(HoloinventoryRevived.MOD_ID, "holo_glasses");
-		HOLO_GLASSES_ITEM = Registry.register(BuiltInRegistries.ITEM, itemID,
-				new ArmorItem(ArmorMaterials.GOLD, ArmorItem.Type.HELMET, new Item.Properties().component(DataComponents.UNBREAKABLE, new Unbreakable(false))));
-
 		//? if fabric {
+		ResourceLocation itemID = ResourceLocation.fromNamespaceAndPath(HoloinventoryRevived.MOD_ID, "holo_glasses");
+		ArmorItem holoGlasses = new ArmorItem(ArmorMaterials.GOLD, ArmorItem.Type.HELMET, new Item.Properties().component(DataComponents.UNBREAKABLE, new Unbreakable(false)));
+		HOLO_GLASSES_ITEM = Registry.register(BuiltInRegistries.ITEM, itemID, holoGlasses);
+
 		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
 				.register((itemGroup) -> itemGroup.accept(HOLO_GLASSES_ITEM));
-		//? } else if forge {
 		//? }
 	}
 
@@ -97,7 +108,7 @@ public class HoloinventoryRevived {
 		//? fabric {
 		return new FabricNetworkClient();
 		//?} neoforge {
-		/*return new NeoforgePlatform();
+		/*return new NeoforgeNetworkClient();
 		 *///?} forge {
 		/*return new ForgePlatform();
 		 *///?}

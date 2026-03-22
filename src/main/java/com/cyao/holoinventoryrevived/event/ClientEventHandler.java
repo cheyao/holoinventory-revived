@@ -27,6 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+//? if fabric {
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+//? } else if neoforge {
+/*import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+*///? }
+
 public class ClientEventHandler {
 	private static WeakReference<Level> worldptr = new WeakReference<>(null);
 	private static final Cache<BlockPos, Pair<List<ItemStack>, String>> BLOCK_CACHE =
@@ -35,12 +44,35 @@ public class ClientEventHandler {
 			Caffeine.newBuilder().maximumSize(20).expireAfterWrite(250, TimeUnit.MILLISECONDS).build();
 
 	// Turn off mod according to config settings
-	private static boolean modEnabled(Player player) {
+	private static boolean modDisabled(Player player) {
 		Config config = HoloinventoryRevived.CONFIG;
-		return ((config.ALWAYS_ACTIVE) ||
-				(config.CONTROL_TRIGGER && Screen.hasControlDown()) ||
-				(config.SHIFT_TRIGGER && Screen.hasShiftDown())) ||
-				(player.getInventory().getArmor(3).is(HoloinventoryRevived.HOLO_GLASSES_ITEM));
+		return !((config.ALWAYS_ACTIVE) ||
+				 (config.CONTROL_TRIGGER && Screen.hasControlDown()) ||
+				 (config.SHIFT_TRIGGER && Screen.hasShiftDown()) ||
+				 (player.getInventory().getArmor(3).is(HoloinventoryRevived.HOLO_GLASSES_ITEM)));
+	}
+
+	private static boolean isContainer(BlockPos pos) {
+		Minecraft minecraft = Minecraft.getInstance();
+		if (minecraft.player == null) {
+			return false;
+		}
+		Level level = minecraft.player.level();
+		BlockEntity block = level.getBlockEntity(pos);
+
+		//? if (neoforge || forge) {
+		/*IItemHandler handler = level.getCapability(
+				Capabilities.ItemHandler.BLOCK,
+				pos,
+				null
+		);
+		*///? } else {
+		Storage<ItemVariant> handler = ItemStorage.SIDED.find(level, pos, null);
+		 //? }
+
+		return (block instanceof Container) ||
+				(block instanceof EnderChestBlockEntity) ||
+				(handler != null);
 	}
 
 	public static void onTick() {
@@ -61,7 +93,7 @@ public class ClientEventHandler {
 			return; // We need to re-cache
 		}
 
-		if (!modEnabled(minecraft.player)) {
+		if (modDisabled(minecraft.player)) {
 			return;
 		}
 
@@ -72,9 +104,9 @@ public class ClientEventHandler {
 
 		// Limit updating to once per 0.6 seconds
 		BlockPos hitPos = ((BlockHitResult) hit).getBlockPos();
-		BlockEntity block = minecraft.level.getBlockEntity(hitPos);
-		if (!(block instanceof Container || block instanceof EnderChestBlockEntity) ||
-				(REQUESTED.getIfPresent(hitPos) != null) ||
+
+		if (!isContainer(hitPos) || // Not a container
+				(REQUESTED.getIfPresent(hitPos) != null) || // Already exists in cache
 				(BLOCK_CACHE.getIfPresent(hitPos) != null &&
 						(BLOCK_CACHE.policy().expireAfterWrite().get().ageOf(hitPos)
 								.get().compareTo(Duration.ofMillis(750)) < 0))) {
@@ -95,7 +127,7 @@ public class ClientEventHandler {
 			return;
 		}
 
-		if (!modEnabled(minecraft.player)) {
+		if (modDisabled(minecraft.player)) {
 			return;
 		}
 
@@ -105,8 +137,7 @@ public class ClientEventHandler {
 		}
 
 		BlockPos hitPos = ((BlockHitResult) hit).getBlockPos();
-		BlockEntity block = minecraft.level.getBlockEntity(hitPos);
-		if (!(block instanceof Container || block instanceof EnderChestBlockEntity)) {
+		if (!isContainer(hitPos)) {
 			return;
 		}
 
@@ -115,6 +146,7 @@ public class ClientEventHandler {
 			return;
 		}
 
+		BlockEntity block = minecraft.level.getBlockEntity(hitPos);
 		InventoryRenderer.render(block, items.getFirst(), items.getSecond(), matrices, renderBuffer, camera);
 	}
 

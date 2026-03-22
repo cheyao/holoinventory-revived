@@ -77,7 +77,7 @@ dependencies {
 	}
 
 	// Cache library
-	implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
+	implementation(libs.caffeine)
 }
 
 stonecutter {
