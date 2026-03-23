@@ -1,5 +1,6 @@
 package com.cyao.holoinventoryrevived.event;
 
+import com.cyao.holoinventoryrevived.GlassesItem;
 import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.config.Config;
 import com.cyao.holoinventoryrevived.renderers.InventoryRenderer;
@@ -49,7 +50,7 @@ public class ClientEventHandler {
 		return !((config.ALWAYS_ACTIVE) ||
 				 (config.CONTROL_TRIGGER && Screen.hasControlDown()) ||
 				 (config.SHIFT_TRIGGER && Screen.hasShiftDown()) ||
-				 (player.getInventory().getArmor(3).is(HoloinventoryRevived.HOLO_GLASSES_ITEM)));
+				 (player.getInventory().getArmor(3).is(GlassesItem.HOLO_GLASSES_ITEM)));
 	}
 
 	private static boolean isContainer(BlockPos pos) {

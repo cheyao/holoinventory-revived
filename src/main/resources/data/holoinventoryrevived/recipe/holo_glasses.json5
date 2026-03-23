@@ -6,16 +6,22 @@
 		" g "
 	],
 	"key": {
-		"g": {
+		//? if >= 1.21.2 {
+		"g": "minecraft:gold_ingot",
+		"G": "minecraft:spyglass"
+		//? }
+
+		//? if <= 1.21.1 {
+		/*"g": {
 			"item": "minecraft:gold_ingot"
 		},
 		"G": {
-			//? if >= 1.17 {
-			"item": "minecraft:spyglass",
-			//? } else {
-			/*"item": "minecraft:glass_pane",
-			*///? }
-		}
+			//? >= 1.17
+			"item": "minecraft:spyglass"
+			//? < 1.17
+			//"item": "minecraft:glass_pane"
+		},
+		*///? }
 	},
 	"result": {
 		"id": "holoinventoryrevived:holo_glasses",

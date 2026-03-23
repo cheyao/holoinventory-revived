@@ -2,7 +2,8 @@ package com.cyao.holoinventoryrevived.platform.neoforge;
 
 //? neoforge {
 
-/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+/*import com.cyao.holoinventoryrevived.GlassesItem;
+import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import com.cyao.holoinventoryrevived.network.NetworkPayloadHandler;
 import com.cyao.holoinventoryrevived.network.NetworkPayloads;
@@ -38,7 +39,7 @@ public class NeoforgeClientEventSubscriber {
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
 		// Is this the tab we want to add to?
 		if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-			event.accept(HoloinventoryRevived.HOLO_GLASSES_ITEM);
+			event.accept(GlassesItem.HOLO_GLASSES_ITEM);
 		}
 	}
 
