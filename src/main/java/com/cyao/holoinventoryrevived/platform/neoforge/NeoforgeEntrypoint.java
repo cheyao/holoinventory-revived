@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.neoforge;
 
 //? neoforge {
 
-import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.config.ConfigScreenProvider;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModContainer;
@@ -27,4 +27,4 @@ public class NeoforgeEntrypoint {
 		HoloinventoryRevived.ARMOR_MATERIALS.register(Objects.requireNonNull(container.getEventBus()));
 	}
 }
-//?}
+*///?}

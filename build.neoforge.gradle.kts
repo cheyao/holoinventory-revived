@@ -55,7 +55,7 @@ repositories {
 dependencies {
 	implementation(libs.moulberry.mixinconstraints)
 	jarJar(libs.moulberry.mixinconstraints)
-	api("me.shedaniel.cloth:cloth-config-neoforge:${prop("deps.cloth")}")
+	api(fletchingTable.modrinth("cloth-config", prop(")deps.minecraft"), "neoforge"))
 
 	// Cache library
 	implementation(libs.caffeine)

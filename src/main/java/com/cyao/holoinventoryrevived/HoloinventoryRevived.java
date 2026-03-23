@@ -7,20 +7,20 @@ import com.cyao.holoinventoryrevived.platform.Platform;
 import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.Toml;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.Unbreakable;
-import net.minecraft.world.item.crafting.Ingredient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.List;
 
 //? fabric {
-/*import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
+import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
 import com.cyao.holoinventoryrevived.platform.fabric.FabricNetworkClient;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -30,8 +30,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 
 import java.util.Map;
-*///?} neoforge {
-import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
+//?} neoforge {
+/*import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
 import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgeNetworkClient;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -42,9 +42,19 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ArmorMaterials;
 
 import java.util.EnumMap;
-//?} forge {
+*///?} forge {
 /*import com.cyao.holoinventoryrevived.platform.forge.ForgePlatform;
 *///?}
+
+//? if =1.21.1 {
+/*import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
+
+import java.util.List;
+*///? } else {
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+//? }
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class HoloinventoryRevived {
@@ -57,9 +67,30 @@ public class HoloinventoryRevived {
 	public static Config CONFIG;
 
 	//? if fabric {
-	/*public static Item HOLO_GLASSES_ITEM;
-	*///? } else if neoforge {
-	public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, MOD_ID);
+	private static final ResourceLocation MATERIAL_ID = ResourceLocation.fromNamespaceAndPath(MOD_ID, "glasses");
+
+	//? if =1.21.1 {
+	/*List<ArmorMaterial.Layer> layers = List.of(
+			new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(MOD_ID, "glasses"), "", false)
+	);
+	public static final ArmorMaterial material = new ArmorMaterial(Map.of(ArmorItem.Type.HELMET, 3), 25, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(Items.GOLD_INGOT), layers, 0.0f, 0.0f);
+
+	material = Holder.direct(Registry.register(BuiltInRegistries.ARMOR_MATERIAL, MATERIAL_ID, material));
+	*///? } else if >= 1.21.2 {
+	public static final ArmorMaterial material =
+			new ArmorMaterial(15, Map.of(ArmorType.HELMET, 3), 25, SoundEvents.ARMOR_EQUIP_GENERIC,
+					0.0f, 0.0f, ItemTags.REPAIRS_GOLD_ARMOR, MATERIAL_ID);
+	//? }
+
+	public static final Item HOLO_GLASSES_ITEM = Registry.register(BuiltInRegistries.ITEM,
+			ResourceLocation.fromNamespaceAndPath(MOD_ID, "holo_glasses"),
+			new ArmorItem(material, ArmorType.HELMET,
+					new Item.Properties()
+							.setId(ResourceKey.create(Registries.ITEM,
+									ResourceLocation.fromNamespaceAndPath(MOD_ID, "holo_glasses")))
+							.component(DataComponents.UNBREAKABLE, new Unbreakable(false))));
+	//? } else if neoforge {
+	/*public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, MOD_ID);
 	public static final Holder<ArmorMaterial> ARMOR_MATERIAL =
 			ARMOR_MATERIALS.register("copper", () -> new ArmorMaterial(
 					Util.make(new EnumMap<>(ArmorItem.Type.class), map -> { map.put(ArmorItem.Type.HELMET, 3); }),
@@ -72,7 +103,7 @@ public class HoloinventoryRevived {
 	public static final DeferredItem<ArmorItem> HOLO_GLASSES_ITEM = ITEMS.register("holo_glasses", () ->
 			new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.HELMET,
 					new Item.Properties().component(DataComponents.UNBREAKABLE, new Unbreakable(false))));
-	//? }
+	*///? }
 
 	private static final Platform PLATFORM = createPlatformInstance();
 	private static final NetworkClient NETWORK = createNetworkInstance();
@@ -91,23 +122,10 @@ public class HoloinventoryRevived {
 			CONFIG = new Config();
 		}
 
-		// Register our glasses item
 		//? if fabric {
-		/*List<ArmorMaterial.Layer> layers = List.of(
-				new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(MOD_ID, "glasses"), "", false)
-		);
-		ArmorMaterial material = new ArmorMaterial(Map.of(
-				ArmorItem.Type.HELMET, 3
-		), 25, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(Items.GOLD_INGOT), layers, 0.0f, 0.0f);
-		material = Registry.register(BuiltInRegistries.ARMOR_MATERIAL, ResourceLocation.fromNamespaceAndPath(MOD_ID, "glasses"), material);
-
-		ResourceLocation itemID = ResourceLocation.fromNamespaceAndPath(MOD_ID, "holo_glasses");
-		ArmorItem holoGlasses = new ArmorItem(Holder.direct(material), ArmorItem.Type.HELMET, new Item.Properties().component(DataComponents.UNBREAKABLE, new Unbreakable(false)));
-		HOLO_GLASSES_ITEM = Registry.register(BuiltInRegistries.ITEM, itemID, holoGlasses);
-
 		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
 				.register((itemGroup) -> itemGroup.accept(HOLO_GLASSES_ITEM));
-		*///? }
+		//? }
 	}
 
 	public static void onInitializeClient() {
@@ -125,20 +143,20 @@ public class HoloinventoryRevived {
 
 	private static Platform createPlatformInstance() {
 		//? fabric {
-		/*return new FabricPlatform();
-		*///?} neoforge {
-		return new NeoforgePlatform();
-		 //?} forge {
+		return new FabricPlatform();
+		//?} neoforge {
+		/*return new NeoforgePlatform();
+		 *///?} forge {
 		/*return new ForgePlatform();
 		*///?}
 	}
 
 	private static NetworkClient createNetworkInstance() {
 		//? fabric {
-		/*return new FabricNetworkClient();
-		*///?} neoforge {
-		return new NeoforgeNetworkClient();
-		 //?} forge {
+		return new FabricNetworkClient();
+		//?} neoforge {
+		/*return new NeoforgeNetworkClient();
+		 *///?} forge {
 		/*return new ForgePlatform();
 		 *///?}
 	}

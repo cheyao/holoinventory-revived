@@ -71,10 +71,9 @@ dependencies {
 	implementation(libs.moulberry.mixinconstraints)
 	include(libs.moulberry.mixinconstraints)
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
-	modImplementation("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
-	modApi("me.shedaniel.cloth:cloth-config-fabric:${prop("deps.cloth")}") {
-		exclude("net.fabricmc.fabric-api")
-	}
+	modApi(fletchingTable.modrinth("modmenu", prop("deps.minecraft"), "fabric"))
+	modApi(fletchingTable.modrinth("cloth-config", prop("deps.minecraft"), "fabric"));
+	modApi("me.shedaniel.cloth:basic-math:+")
 
 	// Cache library
 	implementation(libs.caffeine)

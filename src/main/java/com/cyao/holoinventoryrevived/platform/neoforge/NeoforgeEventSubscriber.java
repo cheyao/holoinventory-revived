@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.neoforge;
 
 //? neoforge {
 
-import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import com.cyao.holoinventoryrevived.network.NetworkPayloadHandler;
 import com.cyao.holoinventoryrevived.network.NetworkPayloads;
@@ -54,18 +54,18 @@ public class NeoforgeEventSubscriber {
 			);
 
 		//? if < 1.21.6 {
-		/*registrar.playToClient(
+		registrar.playToClient(
 				NetworkPayloads.InventoryContentsS2CPayload.ID,
 				NetworkPayloads.InventoryContentsS2CPayload.CODEC,
 				new MainThreadPayloadHandler<>(
 						NeoforgeClientEventSubscriber::clientPayloadHandler
 				)
 		);
-		*///? }
+		//? }
 	}
 
 	private static void serverPayloadHandler(final NetworkPayloads.GetInventoryC2SPayload payload, final IPayloadContext context) {
 		NetworkPayloadHandler.getInventoryPayloadHandler(payload, context.player());
 	}
 }
-//?}
+*///?}
