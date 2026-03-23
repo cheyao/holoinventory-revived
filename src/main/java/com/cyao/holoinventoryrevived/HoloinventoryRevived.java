@@ -11,14 +11,14 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 //? fabric {
-import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
+/*import com.cyao.holoinventoryrevived.platform.fabric.FabricPlatform;
 import com.cyao.holoinventoryrevived.platform.fabric.FabricNetworkClient;
-//? }
+*///? }
 
 //? neoforge {
-/*import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
+import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
 import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgeNetworkClient;
-*///? }
+//? }
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class HoloinventoryRevived {
@@ -65,20 +65,20 @@ public class HoloinventoryRevived {
 
 	private static Platform createPlatformInstance() {
 		//? fabric {
-		return new FabricPlatform();
-		//?} neoforge {
-		/*return new NeoforgePlatform();
-		 *///?} forge {
+		/*return new FabricPlatform();
+		*///?} neoforge {
+		return new NeoforgePlatform();
+		 //?} forge {
 		/*return new ForgePlatform();
 		*///?}
 	}
 
 	private static NetworkClient createNetworkInstance() {
 		//? fabric {
-		return new FabricNetworkClient();
-		//?} neoforge {
-		/*return new NeoforgeNetworkClient();
-		 *///?} forge {
+		/*return new FabricNetworkClient();
+		*///?} neoforge {
+		return new NeoforgeNetworkClient();
+		 //?} forge {
 		/*return new ForgePlatform();
 		 *///?}
 	}

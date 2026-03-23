@@ -16,6 +16,7 @@ platform {
 		required("fabricloader") {
 			versionRange = ">=${libs.fabric.loader.get().version}"
 		}
+		required("cloth-config") {}
 		optional("modmenu") {}
 	}
 }
@@ -37,6 +38,7 @@ loom {
 		programArgs("--username=Dev")
 		configName = "Fabric Client"
 	}
+	/*
 	runs.named("server") {
 		server()
 		ideConfigGenerated(true)
@@ -44,6 +46,7 @@ loom {
 		environment = "server"
 		configName = "Fabric Server"
 	}
+	 */
 }
 
 fabricApi {

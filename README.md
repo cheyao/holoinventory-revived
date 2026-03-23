@@ -12,6 +12,7 @@ This respository was created from @rotgruengelb's [stonecutter template](https:/
 
 - Fabric
   - [x] 1.21.1
+  - [x] 1.21.2
 - Neoforge
   - [x] 1.21.1
 - Forge

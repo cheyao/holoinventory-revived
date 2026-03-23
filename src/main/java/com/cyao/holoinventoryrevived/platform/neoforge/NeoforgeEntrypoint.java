@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.neoforge;
 
 //? neoforge {
 
-/*import com.cyao.holoinventoryrevived.GlassesItem;
+import com.cyao.holoinventoryrevived.GlassesItem;
 import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.config.ConfigScreenProvider;
 import net.neoforged.api.distmarker.Dist;
@@ -25,7 +25,8 @@ public class NeoforgeEntrypoint {
 		HoloinventoryRevived.onInitialize();
 
 		GlassesItem.ITEMS.register(Objects.requireNonNull(container.getEventBus()));
-		GlassesItem.ARMOR_MATERIALS.register(Objects.requireNonNull(container.getEventBus()));
+		//? 1.21 || 1.21.1
+		//GlassesItem.ARMOR_MATERIALS.register(Objects.requireNonNull(container.getEventBus()));
 	}
 }
-*///?}
+//?}

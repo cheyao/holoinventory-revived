@@ -12,6 +12,7 @@ platform {
 		required("neoforge") {
 			forgeVersionRange = "[1,)"
 		}
+		required("cloth-config") {}
 	}
 }
 
@@ -28,14 +29,16 @@ neoForge {
 		register("client") {
 			client()
 			gameDirectory = file("run/")
-			ideName = "NeoForge Client (${stonecutter.active?.version})"
+			ideName = "NeoForge Client (${stonecutter.current.version})"
 			programArgument("--username=Dev")
 		}
+		/*
 		register("server") {
 			server()
 			gameDirectory = file("run/")
 			ideName = "NeoForge Server (${stonecutter.active?.version})"
 		}
+		 */
 	}
 
 	mods {
@@ -73,6 +76,9 @@ stonecutter {
 	replacements.string(current.parsed >= "1.21.11") {
 		replace("ResourceLocation", "Identifier")
 		replace("location()", "identifier()")
+	}
+	replacements.string(current.parsed >= "1.21.2") {
+		replace("ArmorItem.Type", "ArmorType")
 	}
 }
 

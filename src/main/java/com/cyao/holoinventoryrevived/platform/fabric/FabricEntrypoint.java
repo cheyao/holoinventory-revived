@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.fabric;
 
 //? fabric {
 
-import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import dev.kikugie.fletching_table.annotation.fabric.Entrypoint;
 import net.fabricmc.api.ModInitializer;
 
@@ -16,4 +16,4 @@ public class FabricEntrypoint implements ModInitializer {
 		FabricNetworkClient.onInitialize();
 	}
 }
-//?}
+*///?}

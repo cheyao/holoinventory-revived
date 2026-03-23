@@ -12,6 +12,7 @@ platform {
 		required("forge") {
 			forgeVersionRange = "[1,)"
 		}
+		required("cloth-config") {}
 	}
 }
 
@@ -25,11 +26,13 @@ legacyForge {
 			ideName = "Forge Client (${stonecutter.active?.version})"
 			programArgument("--username=Dev")
 		}
+		/*
 		register("server") {
 			server()
 			gameDirectory = file("run/")
 			ideName = "Forge Server (${stonecutter.active?.version})"
 		}
+		*/
 	}
 
 

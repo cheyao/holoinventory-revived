@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.fabric;
 
 //? fabric {
 
-import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import com.cyao.holoinventoryrevived.network.NetworkClient;
 import com.cyao.holoinventoryrevived.network.NetworkPayloadHandler;
@@ -56,4 +56,4 @@ public class FabricNetworkClient implements NetworkClient {
 	}
 }
 
-//? }
+*///? }

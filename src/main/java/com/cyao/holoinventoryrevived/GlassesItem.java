@@ -27,34 +27,34 @@ import net.minecraft.tags.ItemTags;
 //? }
 
 //? fabric {
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+/*import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-//? }
+*///? }
 
 //? neoforge {
-/*import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-*///? }
+//? }
 
 import static com.cyao.holoinventoryrevived.HoloinventoryRevived.MOD_ID;
 
 public class GlassesItem {
 	//? neoforge {
-	/*public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS =
-			DeferredRegister.create(Registries.ARMOR_MATERIAL, MOD_ID);
-	public static final DeferredRegister.Items ITEMS =
-			DeferredRegister.createItems(MOD_ID);
-	*///? }
+	//? 1.21 || 1.21.1
+	//public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, MOD_ID);
+
+	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
+	//? }
 
 	public static final Holder<ArmorMaterial> GLASSES_MATERIAL = registerMaterial("glasses");
 
 	//? fabric
-	public static final Item HOLO_GLASSES_ITEM = register(GLASSES_MATERIAL, "holo_glasses");
+	//public static final Item HOLO_GLASSES_ITEM = register(GLASSES_MATERIAL, "holo_glasses");
 	//? neoforge
-	//public static final DeferredItem<ArmorItem> HOLO_GLASSES_ITEM = register(GLASSES_MATERIAL, "holo_glasses");
+	public static final DeferredItem<ArmorItem> HOLO_GLASSES_ITEM = register(GLASSES_MATERIAL, "holo_glasses");
 
 	public static Holder<ArmorMaterial> registerMaterial(String id) {
 		ResourceLocation materialID = ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
@@ -76,23 +76,20 @@ public class GlassesItem {
 		//? if 1.21.2
 		ArmorMaterial material = new ArmorMaterial(15, armorMap, 25, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f, repairIngredient, materialID);
 
-		//? if fabric {
-		//? if 1.21 || 1.21.1
+		//? if fabric && (1.21 || 1.21.1)
 		//return Holder.direct(Registry.register(BuiltInRegistries.ARMOR_MATERIAL, materialID, material));
+
+		//? if neoforge && (1.21 || 1.21.1)
+		//return ARMOR_MATERIALS.register(id, () -> material);
 
 		//? if 1.21.2
 		return Holder.direct(material);
-		//? }
-
-		//? if neoforge {
-		/*return ARMOR_MATERIALS.register(id, () -> material);
-		*///? }
 	}
 
 	//? fabric
-	public static Item register(Holder<ArmorMaterial> armorMaterial, String id) {
+	//public static Item register(Holder<ArmorMaterial> armorMaterial, String id) {
 	//? neoforge
-	//public static DeferredItem<ArmorItem> register(Holder<ArmorMaterial> material, String id) {
+	public static DeferredItem<ArmorItem> register(Holder<ArmorMaterial> armorMaterial, String id) {
 		ResourceLocation itemID = ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
 
 		//? 1.21 || 1.21.1
@@ -106,18 +103,18 @@ public class GlassesItem {
 				.component(DataComponents.UNBREAKABLE, new Unbreakable(false)));
 
 		//? fabric {
-		return Registry.register(BuiltInRegistries.ITEM, itemID, item.get());
-		//? }
+		/*return Registry.register(BuiltInRegistries.ITEM, itemID, item.get());
+		*///? }
 
 		//? neoforge {
-		/*return ITEMS.register(id, item);
-		*///? }
+		return ITEMS.register(id, item);
+		//? }
 	}
 
 	public static void initialize() {
 		//? fabric {
-		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+		/*ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
 				.register((itemGroup) -> itemGroup.accept(HOLO_GLASSES_ITEM));
-		//? }
+		*///? }
 	}
 }

@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.neoforge;
 
 //? neoforge {
 
-/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import com.cyao.holoinventoryrevived.network.NetworkPayloadHandler;
 import com.cyao.holoinventoryrevived.network.NetworkPayloads;
@@ -68,4 +68,4 @@ public class NeoforgeEventSubscriber {
 		NetworkPayloadHandler.getInventoryPayloadHandler(payload, context.player());
 	}
 }
-*///?}
+//?}
