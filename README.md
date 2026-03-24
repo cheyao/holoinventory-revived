@@ -37,6 +37,7 @@ Need help/found a bug? Open an issue on the [GitHub repo](https://github.com/che
   - [x] 1.21.2
 - Neoforge
   - [x] 1.21.1
+  - [x] 1.21.2
 - Forge
 
 More to come

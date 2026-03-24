@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 fun Project.prop(name: String): String = (findProperty(name) ?: "") as String
 
-fun Project.env(variable: String): String = providers.environmentVariable(variable).get()
+fun Project.env(variable: String): String? = providers.environmentVariable(variable).orNull
 
 fun Project.envTrue(variable: String): Boolean = env(variable)?.toDefaultLowerCase() == "true"
 
@@ -44,6 +44,8 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 			jarTask.convention(if (inferredLoaderIsFabric) "remapJar" else "jar")
 			sourcesJarTask.convention(if (inferredLoaderIsFabric) "remapSourcesJar" else "sourcesJar")
 		}
+
+		file("build/generated/ksp").mkdirs()
 
 		listOf(
 			"org.jetbrains.kotlin.jvm",
@@ -338,6 +340,8 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 			deps.incompatible.forEach { dep -> whenNotNull(dep.modrinth) { incompatible(it) } }
 			deps.embeds.forEach { dep -> whenNotNull(dep.modrinth) { embeds(it) } }
 		}
+
+		requires("cloth-config")
 	}
 
 	private fun ModPublishExtension.curseforge(

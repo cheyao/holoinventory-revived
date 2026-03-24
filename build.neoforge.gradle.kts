@@ -12,7 +12,7 @@ platform {
 		required("neoforge") {
 			forgeVersionRange = "[1,)"
 		}
-		required("cloth-config") {}
+		required("cloth_config") {}
 	}
 }
 
@@ -58,7 +58,7 @@ repositories {
 dependencies {
 	implementation(libs.moulberry.mixinconstraints)
 	jarJar(libs.moulberry.mixinconstraints)
-	api(fletchingTable.modrinth("cloth-config", prop("deps.minecraft"), "neoforge"))
+	implementation(fletchingTable.modrinth("cloth-config", prop("deps.minecraft"), "neoforge"))
 
 	// Cache library
 	implementation(libs.caffeine)
