@@ -30,11 +30,11 @@ public class NetworkPayloads {
 	public record InventoryContentsS2CPayload(BlockPos pos, List<ItemStack> items, String name) implements CustomPacketPayload {
 		public static final ResourceLocation GET_INVENTORY_PAYLOAD_ID = ResourceLocation.fromNamespaceAndPath(HoloinventoryRevived.MOD_ID, "inventory_contents");
 		public static final CustomPacketPayload.Type<InventoryContentsS2CPayload> ID = new Type<>(GET_INVENTORY_PAYLOAD_ID);
-		//? if =1.21.1 {
-		/*public static final StreamCodec<RegistryFriendlyByteBuf, List<ItemStack>> ITEMSTACK_CODEC = ItemStack.LIST_STREAM_CODEC;
-		*///? } else if >= 1.21.2 {
+		//? if =1.21.1
+		//public static final StreamCodec<RegistryFriendlyByteBuf, List<ItemStack>> ITEMSTACK_CODEC = ItemStack.LIST_STREAM_CODEC;
+		//? if >= 1.21.2 || 1.21
 		public static final StreamCodec<RegistryFriendlyByteBuf, List<ItemStack>> ITEMSTACK_CODEC = ItemStack.OPTIONAL_LIST_STREAM_CODEC;
-		//? }
+
 		public static final StreamCodec<RegistryFriendlyByteBuf, InventoryContentsS2CPayload> CODEC = StreamCodec.composite(
 				BlockPos.STREAM_CODEC, InventoryContentsS2CPayload::pos,
 				ITEMSTACK_CODEC, InventoryContentsS2CPayload::items,

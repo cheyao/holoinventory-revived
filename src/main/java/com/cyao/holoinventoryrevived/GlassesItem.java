@@ -19,7 +19,7 @@ import net.minecraft.world.item.Items;
 import java.util.List;
 *///? }
 
-//? 1.21.2 {
+//? 1.21.2 || 1.21.3 {
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.core.registries.Registries;
@@ -69,12 +69,12 @@ public class GlassesItem {
 		var repairIngredient = Ingredient.of(Items.GOLD_INGOT);
 		*///? }
 
-		//? if 1.21.2
+		//? if 1.21.2 || 1.21.3
 		var repairIngredient = ItemTags.REPAIRS_GOLD_ARMOR;
 
 		//? if 1.21 || 1.21.1
 		//ArmorMaterial material = new ArmorMaterial(armorMap, 25, SoundEvents.ARMOR_EQUIP_GENERIC, () -> repairIngredient, layers, 0.0f, 0.0f);
-		//? if 1.21.2
+		//? if 1.21.2 || 1.21.3
 		ArmorMaterial material = new ArmorMaterial(15, armorMap, 25, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f, repairIngredient, materialID);
 
 		//? if fabric && (1.21 || 1.21.1)
@@ -83,7 +83,7 @@ public class GlassesItem {
 		//? if neoforge && (1.21 || 1.21.1)
 		//return ARMOR_MATERIALS.register(id, () -> material);
 
-		//? if 1.21.2
+		//? if 1.21.2 || 1.21.3
 		return Holder.direct(material);
 	}
 
@@ -95,11 +95,11 @@ public class GlassesItem {
 
 		//? 1.21 || 1.21.1
 		//Holder<ArmorMaterial> material = armorMaterial;
-		//? 1.21.2
+		//? 1.21.2 || 1.21.3
 		 ArmorMaterial material = armorMaterial.value();
 
 		Supplier<ArmorItem> item =  () -> new ArmorItem(material, ArmorType.HELMET, new Item.Properties()
-		//? 1.21.2
+		//? 1.21.2 || 1.21.3
 				.setId(ResourceKey.create(Registries.ITEM, itemID))
 				.component(DataComponents.UNBREAKABLE, new Unbreakable(false)));
 

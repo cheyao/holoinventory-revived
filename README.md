@@ -33,11 +33,15 @@ Need help/found a bug? Open an issue on the [GitHub repo](https://github.com/che
 ### Versions
 
 - Fabric
+  - [x] 1.21
   - [x] 1.21.1
   - [x] 1.21.2
+  - [x] 1.21.3
 - Neoforge
+  - [x] 1.21
   - [x] 1.21.1
   - [x] 1.21.2
+  - [x] 1.21.3
 - Forge
 
 More to come

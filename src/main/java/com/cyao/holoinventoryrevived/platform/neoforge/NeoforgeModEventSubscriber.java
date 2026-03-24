@@ -12,7 +12,10 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.handling.MainThreadPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
-@EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+//? <=1.21.2
+//@EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+//? > 1.21.2
+@EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID)
 public class NeoforgeModEventSubscriber {
 	@SubscribeEvent
 	public static void register(RegisterPayloadHandlersEvent event) {
