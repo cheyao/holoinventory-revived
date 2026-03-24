@@ -3,6 +3,13 @@ plugins {
 	id("fabric-loom")
 }
 
+repositories {
+	mavenCentral()
+	strictMaven("https://maven.terraformersmc.com/", "com.terraformersmc") { name = "TerraformersMC" }
+	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	strictMaven("https://maven.shedaniel.me/", "me.shedaniel.cloth") { name = "Shedaniel" }
+}
+
 platform {
 	loader = "fabric"
 	dependencies {
@@ -54,13 +61,6 @@ fabricApi {
 		outputDirectory = file("${rootDir}/versions/datagen/${stonecutter.current.version.split("-")[0]}/src/main/generated")
 		client = true
 	}
-}
-
-repositories {
-	mavenCentral()
-	strictMaven("https://maven.terraformersmc.com/", "com.terraformersmc") { name = "TerraformersMC" }
-	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
-	strictMaven("https://maven.shedaniel.me/", "me.shedaniel.cloth") { name = "Shedaniel" }
 }
 
 dependencies {

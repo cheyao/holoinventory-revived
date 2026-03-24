@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 fun Project.prop(name: String): String = (findProperty(name) ?: "") as String
 
-fun Project.env(variable: String): String? = providers.environmentVariable(variable).orNull
+fun Project.env(variable: String): String = providers.environmentVariable(variable).get()
 
 fun Project.envTrue(variable: String): Boolean = env(variable)?.toDefaultLowerCase() == "true"
 

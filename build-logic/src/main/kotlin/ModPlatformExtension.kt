@@ -54,7 +54,7 @@ abstract class Dependency @Inject constructor(val name: String) {
 	init {
 		modid.convention(name)
 		versionRange.convention("*")
-		forgeVersionRange.convention("(,]")
+		forgeVersionRange.convention("[0,)")
 		environment.convention("both")
 	}
 
