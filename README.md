@@ -1,7 +1,7 @@
 # Holoinventory Revived
 
-[![Modrinth](https://img.shields.io/modrinth/dt/1eAoo2KR?color=00AF5C&label=downloads&logo=modrinth)](https://modrinth.com/mod/holoinventory-revived)
-[![CurseForge](https://cf.way2muchnoise.eu/full_667299_downloads.svg)](https://curseforge.com/minecraft/mc-mods/holoinventory-revived)
+[![Modrinth](https://img.shields.io/modrinth/dt/holoinventory-revived?color=00AF5C&label=downloads&logo=modrinth)](https://modrinth.com/mod/holoinventory-revived)
+[![CurseForge](https://img.shields.io/curseforge/dt/1493003?logo=curseforge&label=downloads&color=E04E14)](https://curseforge.com/minecraft/mc-mods/holoinventory-revived)
 
 A port of the 1.12.1 HoloInventory mod to newer Minecraft versions.
 
