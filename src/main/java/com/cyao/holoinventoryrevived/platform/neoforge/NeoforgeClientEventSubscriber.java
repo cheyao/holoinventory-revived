@@ -14,9 +14,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
+//? if >= 1.21.7
+//import net.neoforged.neoforge.client.event.RegisterClientPayloadHandlersEvent;
+
 @EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID, value = Dist.CLIENT)
 public class NeoforgeClientEventSubscriber {
-	//? if >= 1.21.6 {
+	//? if >= 1.21.7 {
 	/*@SubscribeEvent
 	public static void register(RegisterClientPayloadHandlersEvent event) {
 		event.register(
@@ -27,10 +30,16 @@ public class NeoforgeClientEventSubscriber {
 	*///? }
 
 	@SubscribeEvent
-	public static void onDrawLast(RenderLevelStageEvent event) {
-		if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_ENTITIES) {
+	//? <=1.21.5
+	//public static void onDrawLast(RenderLevelStageEvent event) {
+	//? >=1.21.6
+	public static void onDrawLast(RenderLevelStageEvent.AfterEntities event) {
+
+		//? <=1.21.5 {
+		/*if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_ENTITIES) {
 			return;
 		}
+		*///? }
 
 		MultiBufferSource bufferSource = Minecraft.getInstance()
 				.renderBuffers()

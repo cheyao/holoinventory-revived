@@ -30,7 +30,7 @@ public class NeoforgeModEventSubscriber {
 				)
 			);
 
-		//? if < 1.21.6 {
+		//? if <=1.21.6 {
 		registrar.playToClient(
 				InventoryContentsS2CPayload.ID,
 				InventoryContentsS2CPayload.CODEC,
