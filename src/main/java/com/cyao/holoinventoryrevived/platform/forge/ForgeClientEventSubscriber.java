@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.forge;
 
 //? forge {
 
-import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import com.cyao.holoinventoryrevived.network.InventoryContentsS2CPayload;
 import com.cyao.holoinventoryrevived.network.NetworkPayloadHandler;
@@ -29,4 +29,4 @@ public class ForgeClientEventSubscriber {
 		bufferSource.endBatch();
 	}
 }
-//?}
+*///?}

@@ -28,17 +28,17 @@ import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 *///? }
 
 //? neoforge {
-/*import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
-*///? }
+//? }
 
 //? forge {
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+/*import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import com.cyao.holoinventoryrevived.platform.forge.ForgeNetworkClient;
 import net.minecraftforge.network.PacketDistributor;
-//? }
+*///? }
 
 public class NetworkPayloadHandler {
 	public static void getInventoryPayloadHandler(final GetInventoryC2SPayload payload, Player player) {
@@ -54,50 +54,50 @@ public class NetworkPayloadHandler {
 		String name = "";
 
 		//? if >1.20.5 && (neoforge || forge) {
-		/*IItemHandler handler = level.getCapability(
+		IItemHandler handler = level.getCapability(
 				Capabilities.ItemHandler.BLOCK,
 				payload.pos(),
 				null
 		);
-		*///? } else if forge {
-		IItemHandler handler;
+		//? } else if forge {
+		/*IItemHandler handler;
 		var capability = block.getCapability(ForgeCapabilities.ITEM_HANDLER);
 		if (capability.isPresent()) {
 			handler = capability.orElse(null);
 		} else {
 			handler = null;
 		}
-		//? } else {
+		*///? } else {
 		/*Storage<ItemVariant> handler = ItemStorage.SIDED.find(level, payload.pos(), null);
 		*///? }
 
 		if (block instanceof EnderChestBlockEntity) {
 			//? if forge {
-			var enderCount = player.getEnderChestInventory().getContainerSize();
+			/*var enderCount = player.getEnderChestInventory().getContainerSize();
 			for (int i = 0; i < enderCount; ++i) {
 				if (!player.getEnderChestInventory().getItem(i).isEmpty()) {
 					items.add(player.getEnderChestInventory().getItem(i));
 				}
 			}
-			//? } else {
-			/*//? if >= 1.21
-			//var enderItems = player.getEnderChestInventory().getItems();
+			*///? } else {
+			//? if >= 1.21
+			var enderItems = player.getEnderChestInventory().getItems();
 			//? if < 1.21
-			var enderItems = player.getEnderChestInventory().items;
+			//var enderItems = player.getEnderChestInventory().items;
 
 			for (ItemStack item : enderItems) {
 				if (!item.isEmpty()) {
 					items.add(item);
 				}
 			}
-			*///? }
+			//? }
 
 			name = Items.ENDER_CHEST.getDefaultInstance().getDisplayName().getString();
 		} else if (block instanceof JukeboxBlockEntity jukebox) {
 			//? if >= 1.21
-			//ItemStack theItem = jukebox.getTheItem();
+			ItemStack theItem = jukebox.getTheItem();
 			//? if < 1.21
-			ItemStack theItem = jukebox.getItem(0);
+			//ItemStack theItem = jukebox.getItem(0);
 
 			if (!theItem.isEmpty()) {
 				items.add(theItem);
@@ -166,18 +166,18 @@ public class NetworkPayloadHandler {
 		/*ServerPlayNetworking.send(
 				(ServerPlayer) player,
 				//? if < 1.20.5
-				InventoryContentsS2CPayload.ID,
+				//InventoryContentsS2CPayload.ID,
 				response
 		);
 		*///? }
 
 		//? neoforge {
-		/*PacketDistributor.sendToPlayer((ServerPlayer) player, response);
-		*///? }
+		PacketDistributor.sendToPlayer((ServerPlayer) player, response);
+		//? }
 
 		//? forge {
-		ForgeNetworkClient.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), response);
-		//? }
+		/*ForgeNetworkClient.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), response);
+		*///? }
 	}
 
 	public static void inventoryContentsPayloadHandler(final InventoryContentsS2CPayload payload, Level level) {

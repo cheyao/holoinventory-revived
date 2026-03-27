@@ -7,12 +7,12 @@
 	],
 	"key": {
 		//? if >= 1.21.2 {
-		/*"g": "minecraft:gold_ingot",
+		"g": "minecraft:gold_ingot",
 		"G": "minecraft:spyglass"
-		*///? }
+		//? }
 
 		//? if <= 1.21.1 {
-		"g": {
+		/*"g": {
 			"item": "minecraft:gold_ingot"
 		},
 		"G": {
@@ -21,13 +21,13 @@
 			//? < 1.17
 			//"item": "minecraft:glass_pane"
 		},
-		//? }
+		*///? }
 	},
 	"result": {
 		//? >= 1.21
-		//"id": "holoinventoryrevived:holo_glasses",
+		"id": "holoinventoryrevived:holo_glasses",
 		//? < 1.21
-		"item": "holoinventoryrevived:holo_glasses",
+		//"item": "holoinventoryrevived:holo_glasses",
 		"count": 1
 	}
 }

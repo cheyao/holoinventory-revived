@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.forge;
 
 //? if forge {
 
-import com.cyao.holoinventoryrevived.GlassesItem;
+/*import com.cyao.holoinventoryrevived.GlassesItem;
 import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,4 +26,4 @@ public class ForgeClientModEventSubscriber {
 	}
 }
 
-//? }
+*///? }

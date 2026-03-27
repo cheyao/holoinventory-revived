@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.forge;
 
 //? if forge {
 
-import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.network.GetInventoryC2SPayload;
 import com.cyao.holoinventoryrevived.network.InventoryContentsS2CPayload;
 import com.cyao.holoinventoryrevived.network.NetworkClient;
@@ -16,9 +16,9 @@ public class ForgeNetworkClient implements NetworkClient {
 	private static final String PROTOCOL_VERSION = "1";
 	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
 			//? >= 1.20.1
-			//ResourceLocation.fromNamespaceAndPath(HoloinventoryRevived.MOD_ID, "main"),
+			ResourceLocation.fromNamespaceAndPath(HoloinventoryRevived.MOD_ID, "main"),
 			//? <= 1.20
-			new ResourceLocation(HoloinventoryRevived.MOD_ID, "main"),
+			//new ResourceLocation(HoloinventoryRevived.MOD_ID, "main"),
 			() -> PROTOCOL_VERSION,
 			PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals
@@ -48,4 +48,4 @@ public class ForgeNetworkClient implements NetworkClient {
 	}
 }
 
-//? }
+*///? }

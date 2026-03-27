@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+//? >= 1.21.5
+import net.minecraft.world.entity.EquipmentSlot;
+
 //? fabric {
 /*import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -35,13 +38,13 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 *///? }
 
 //? neoforge {
-/*import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
-*///? }
+//? }
 
 //? forge {
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-//? }
+/*import net.minecraftforge.common.capabilities.ForgeCapabilities;
+*///? }
 
 public class ClientEventHandler {
 	private static WeakReference<Level> worldptr = new WeakReference<>(null);
@@ -56,10 +59,12 @@ public class ClientEventHandler {
 		return !((config.ALWAYS_ACTIVE) ||
 				 (config.CONTROL_TRIGGER && Screen.hasControlDown()) ||
 				 (config.SHIFT_TRIGGER && Screen.hasShiftDown()) ||
-				 (player.getInventory().getArmor(3).is(GlassesItem.HOLO_GLASSES_ITEM
-						 //? forge
-						 .get()
-				 )));
+				 //? <= 1.21.4
+				 //(player.getInventory().getArmor(3).is(GlassesItem.HOLO_GLASSES_ITEM/*? forge {*//*.get()*//*? } */))
+				 //? >= 1.21.5
+				 (player.getItemBySlot(EquipmentSlot.HEAD).is(GlassesItem.HOLO_GLASSES_ITEM))
+		);
+
 	}
 
 	private static boolean isContainer(BlockPos pos) {
@@ -75,10 +80,10 @@ public class ClientEventHandler {
 		}
 
 		//? if neoforge {
-		/*boolean handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null) != null;
-		*///? } else if forge {
-		boolean handler = block.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent();
-		//? } else {
+		boolean handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null) != null;
+		//? } else if forge {
+		/*boolean handler = block.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent();
+		*///? } else {
 		/*boolean handler = ItemStorage.SIDED.find(level, pos, null) != null;
 		 *///? }
 

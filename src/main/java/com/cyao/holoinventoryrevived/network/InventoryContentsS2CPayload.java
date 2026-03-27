@@ -16,17 +16,17 @@ import java.util.function.Supplier;
 //import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 
 //? forge {
-import net.minecraftforge.api.distmarker.Dist;
+/*import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
-//? }
+*///? }
 
 //? (<1.20.5 && fabric) || forge {
-public class InventoryContentsS2CPayload {
+/*public class InventoryContentsS2CPayload {
 	//? forge && >= 1.20.1
 	//public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(HoloinventoryRevived.MOD_ID, "inventory_contents");
 	//? fabric
-	//public static final ResourceLocation ID = new ResourceLocation(HoloinventoryRevived.MOD_ID, "inventory_contents");
+	public static final ResourceLocation ID = new ResourceLocation(HoloinventoryRevived.MOD_ID, "inventory_contents");
 
 	private BlockPos pos;
 	private List<ItemStack> items;
@@ -52,7 +52,7 @@ public class InventoryContentsS2CPayload {
 	}
 
 	//? fabric {
-	/*public static FriendlyByteBuf encode(BlockPos pos, List<ItemStack> items, String name) {
+	public static FriendlyByteBuf encode(BlockPos pos, List<ItemStack> items, String name) {
 		FriendlyByteBuf buf = PacketByteBufs.create();
 		buf.writeBlockPos(pos);
 		buf.writeInt(items.size());
@@ -62,7 +62,7 @@ public class InventoryContentsS2CPayload {
 		buf.writeUtf(name);
 		return buf;
 	}
-	*///? }
+	//? }
 
 	public void encode(FriendlyByteBuf buf) {
 		buf.writeBlockPos(pos);
@@ -90,16 +90,16 @@ public class InventoryContentsS2CPayload {
 	}
 
 	//? forge {
-	public void handle(Supplier<NetworkEvent.Context> ctx) {
+	/^public void handle(Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> NetworkPayloadHandler.inventoryContentsPayloadHandler(this, net.minecraft.client.Minecraft.getInstance().level));
 		});
 		ctx.get().setPacketHandled(true);
 	}
-	//? }
+	^///? }
 }
-//? } else {
-/*import net.minecraft.network.RegistryFriendlyByteBuf;
+*///? } else {
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -111,7 +111,7 @@ public record InventoryContentsS2CPayload(BlockPos pos, List<ItemStack> items, S
 	//? if =1.21.1
 	//public static final StreamCodec<RegistryFriendlyByteBuf, List<ItemStack>> ITEMSTACK_CODEC = ItemStack.LIST_STREAM_CODEC;
 	//? if >= 1.21.2 || 1.21
-	//public static final StreamCodec<RegistryFriendlyByteBuf, List<ItemStack>> ITEMSTACK_CODEC = ItemStack.OPTIONAL_LIST_STREAM_CODEC;
+	public static final StreamCodec<RegistryFriendlyByteBuf, List<ItemStack>> ITEMSTACK_CODEC = ItemStack.OPTIONAL_LIST_STREAM_CODEC;
 
 	public static final StreamCodec<RegistryFriendlyByteBuf, InventoryContentsS2CPayload> CODEC = StreamCodec.composite(
 			BlockPos.STREAM_CODEC, InventoryContentsS2CPayload::pos,
@@ -125,4 +125,4 @@ public record InventoryContentsS2CPayload(BlockPos pos, List<ItemStack> items, S
 		return ID;
 	}
 }
-*///? }
+//? }

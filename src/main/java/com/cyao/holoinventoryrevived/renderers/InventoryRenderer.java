@@ -10,30 +10,58 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
+//? <= 1.21.4
+//import net.minecraft.client.resources.model.BakedModel;
+//? >= 1.21.5 {
+import net.minecraft.client.resources.model.ModelManager;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+//? }
+
 import java.util.List;
 
 public class InventoryRenderer {
 	private static void renderItem(Level world, ItemStack item, PoseStack matrices, MultiBufferSource renderBuffer) {
-		ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
-		BakedModel blockModel = renderer.getModel(item, world, null, 0);
+		//? <= 1.21.4
+		//ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
+		//? >= 1.21.5
+		ModelManager renderer = Minecraft.getInstance().getModelManager();
+
+		//? <= 1.21.4
+		//BakedModel blockModel = renderer.getModel(item, world, null, 0);
 
 		matrices.pushPose();
-		if (!blockModel.usesBlockLight()) {
+		//? <= 1.21.4 {
+		/*if (!blockModel.usesBlockLight()) {
 			// Unify item & block scale
-			matrices.scale(0.75f, 0.75f, 0.75f);
+			float scale = 0.75f;
+			matrices.scale(scale, scale, scale);
 		}
+		*///? }
 		matrices.scale(0.45f, 0.45f, 0.45f);
 
-
 		matrices.rotateAround(Axis.YP.rotationDegrees((float) (360 * (System.currentTimeMillis() & 0x3FFFL) / (double) 0x3FFFL)), 0, 0, 0);
-		renderer.render(item, ItemDisplayContext.FIXED, false, matrices, renderBuffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, blockModel);
+
+		//? <= 1.21.4
+		//renderer.render(item, ItemDisplayContext.FIXED, false, matrices, renderBuffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, blockModel);
+
+		//? >= 1.21.5 {
+		ItemStackRenderState renderState = new ItemStackRenderState();
+		ItemModelResolver resolver = Minecraft.getInstance().getItemModelResolver();
+
+		resolver.updateForTopItem(renderState, item, ItemDisplayContext.FIXED, world, null, 0);
+		renderState.render(matrices, renderBuffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+		//? }
+
 		matrices.popPose();
 	}
 
@@ -53,9 +81,8 @@ public class InventoryRenderer {
 		else size = item.getCount() / (1000_000) + "M";
 
 		int width = textRenderer.width(size);
-		RenderSystem.disableDepthTest();
 		textRenderer.drawInBatch(size,
-				(float) -(width / 2.0f), 0f, 0xFFFFFFFF,
+				-(width / 2.0f), 0f, 0xFFFFFFFF,
 				true, matrices.last().pose(), renderBuffer,
 				Font.DisplayMode.POLYGON_OFFSET, 0, LightTexture.FULL_BRIGHT);
 		matrices.popPose();
@@ -75,16 +102,16 @@ public class InventoryRenderer {
 		matrices.pushPose();
 
 		//? < 1.21
-		matrices.translate(difference.x, difference.y, difference.z);
+		//matrices.translate(difference.x, difference.y, difference.z);
 
 		matrices.rotateAround(camera.rotation(), 0, 0, 0);
 		//? >= 1.21
-		 //matrices.rotateAround(Axis.YP.rotationDegrees(180), 0, 0, 0);
+		 matrices.rotateAround(Axis.YP.rotationDegrees(180), 0, 0, 0);
 		//? >= 1.21
-		 //matrices.translate(0, 0.0f, difference.length() - 0.75f);
+		 matrices.translate(0, 0.0f, difference.length() - 0.75f);
 
 		//? < 1.21
-		matrices.translate(0, 0.0f, -0.75f);
+		//matrices.translate(0, 0.0f, -0.75f);
 
 		double distance = difference.length();
 		matrices.scale((float) (distance * 0.2f), (float) (distance * 0.2f), (float) (distance * 0.2f));

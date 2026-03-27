@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.neoforge;
 
 //? neoforge {
 
-/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.network.GetInventoryC2SPayload;
 import com.cyao.holoinventoryrevived.network.InventoryContentsS2CPayload;
 import com.cyao.holoinventoryrevived.network.NetworkPayloadHandler;
@@ -14,9 +14,9 @@ import net.neoforged.neoforge.network.handling.MainThreadPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 //? <=1.21.2
-@EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+//@EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 //? > 1.21.2
-//@EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID)
+@EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID)
 public class NeoforgeModEventSubscriber {
 	@SubscribeEvent
 	public static void register(RegisterPayloadHandlersEvent event) {
@@ -45,4 +45,4 @@ public class NeoforgeModEventSubscriber {
 		NetworkPayloadHandler.getInventoryPayloadHandler(payload, context.player());
 	}
 }
-*///?}
+//?}

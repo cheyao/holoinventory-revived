@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.forge;
 
 //? forge {
 
-import com.cyao.holoinventoryrevived.GlassesItem;
+/*import com.cyao.holoinventoryrevived.GlassesItem;
 import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.config.ConfigScreenProvider;
 import net.minecraftforge.client.ConfigScreenHandler;
@@ -17,14 +17,14 @@ import java.util.Objects;
 @Mod(HoloinventoryRevived.MOD_ID)
 public class ForgeEntrypoint {
 	//? < 1.20.1
-	public ForgeEntrypoint() {
+	//public ForgeEntrypoint() {
 	//? >= 1.20.1
-	//public ForgeEntrypoint(FMLJavaModLoadingContext context) {
+	public ForgeEntrypoint(FMLJavaModLoadingContext context) {
 		if (FMLEnvironment.dist.isClient()) {
 			//? < 1.20.1
-			ModLoadingContext.get().getActiveContainer()
+			//ModLoadingContext.get().getActiveContainer()
 			//? >= 1.20.1
-			//context.getContainer()
+			context.getContainer()
 					.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
 					() -> new ConfigScreenHandler.ConfigScreenFactory(
 							(mc, screen) -> ConfigScreenProvider.createConfigScreen(screen)));
@@ -33,12 +33,12 @@ public class ForgeEntrypoint {
 		HoloinventoryRevived.onInitialize();
 
 		//? < 1.20.1
-		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+		//IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 		//? >= 1.20.1
-		//IEventBus modBus = context.getModEventBus();
+		IEventBus modBus = context.getModEventBus();
 
 		GlassesItem.ITEMS.register(Objects.requireNonNull(modBus));
 		ForgeNetworkClient.register();
 	}
 }
-//?}
+*///?}

@@ -8,19 +8,19 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.function.Supplier;
 
 //? forge {
-import net.minecraft.server.level.ServerPlayer;
+/*import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-//? }
+*///? }
 
 //? fabric
 //import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 
 //? (<1.20.5 && fabric) || forge {
-public class GetInventoryC2SPayload {
+/*public class GetInventoryC2SPayload {
 	//? forge && >=1.20.1
 	//public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(HoloinventoryRevived.MOD_ID, "get_inventory");
 	//? fabric
-	//public static final ResourceLocation ID = new ResourceLocation(HoloinventoryRevived.MOD_ID, "get_inventory");
+	public static final ResourceLocation ID = new ResourceLocation(HoloinventoryRevived.MOD_ID, "get_inventory");
 
 	private BlockPos pos;
 
@@ -35,12 +35,12 @@ public class GetInventoryC2SPayload {
 	}
 
 	//? fabric {
-	/*public static FriendlyByteBuf encode(BlockPos pos) {
+	public static FriendlyByteBuf encode(BlockPos pos) {
 		FriendlyByteBuf buf = PacketByteBufs.create();
 		buf.writeBlockPos(pos);
 		return buf;
 	}
-	*///? }
+	//? }
 
 	public void encode(FriendlyByteBuf buf) {
 		buf.writeBlockPos(pos);
@@ -53,7 +53,7 @@ public class GetInventoryC2SPayload {
 	}
 
 	//? forge {
-	public void handle(Supplier<NetworkEvent.Context> ctx) {
+	/^public void handle(Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			ServerPlayer player = ctx.get().getSender();
 			if (player == null) return;
@@ -61,10 +61,10 @@ public class GetInventoryC2SPayload {
 		});
 		ctx.get().setPacketHandled(true);
 	}
-	//? }
+	^///? }
 }
-//? } else {
-/*import net.minecraft.network.RegistryFriendlyByteBuf;
+*///? } else {
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
@@ -83,4 +83,4 @@ public record GetInventoryC2SPayload(BlockPos pos) implements CustomPacketPayloa
 		return ID;
 	}
 }
-*///? }
+//? }

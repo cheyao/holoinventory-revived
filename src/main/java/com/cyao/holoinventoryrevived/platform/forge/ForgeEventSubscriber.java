@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived.platform.forge;
 
 //? forge {
 
-import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+/*import com.cyao.holoinventoryrevived.HoloinventoryRevived;
 import com.cyao.holoinventoryrevived.event.ClientEventHandler;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,4 +17,4 @@ public class ForgeEventSubscriber {
 		}
 	}
 }
-//?}
+*///?}

@@ -2,7 +2,7 @@ package com.cyao.holoinventoryrevived;
 
 //? < 1.21 {
 
-import net.minecraft.sounds.SoundEvent;
+/*import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -52,4 +52,4 @@ public class GlassesArmorMaterial implements ArmorMaterial {
 	}
 }
 
-//? }
+*///? }
