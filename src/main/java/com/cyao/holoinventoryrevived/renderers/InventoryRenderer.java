@@ -17,9 +17,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
-//? <= 1.21.4
+//? <= 1.21.3
 //import net.minecraft.client.resources.model.BakedModel;
-//? >= 1.21.5 {
+//? >= 1.21.4 {
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -31,16 +31,16 @@ import java.util.List;
 
 public class InventoryRenderer {
 	private static void renderItem(Level world, ItemStack item, PoseStack matrices, MultiBufferSource renderBuffer) {
-		//? <= 1.21.4
+		//? <= 1.21.3
 		//ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
-		//? >= 1.21.5
+		//? >= 1.21.4
 		ModelManager renderer = Minecraft.getInstance().getModelManager();
 
-		//? <= 1.21.4
+		//? <= 1.21.3
 		//BakedModel blockModel = renderer.getModel(item, world, null, 0);
 
 		matrices.pushPose();
-		//? <= 1.21.4 {
+		//? <= 1.21.3 {
 		/*if (!blockModel.usesBlockLight()) {
 			// Unify item & block scale
 			float scale = 0.75f;
@@ -51,14 +51,18 @@ public class InventoryRenderer {
 
 		matrices.rotateAround(Axis.YP.rotationDegrees((float) (360 * (System.currentTimeMillis() & 0x3FFFL) / (double) 0x3FFFL)), 0, 0, 0);
 
-		//? <= 1.21.4
+		//? <= 1.21.3
 		//renderer.render(item, ItemDisplayContext.FIXED, false, matrices, renderBuffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, blockModel);
 
-		//? >= 1.21.5 {
+		//? >= 1.21.4 {
 		ItemStackRenderState renderState = new ItemStackRenderState();
 		ItemModelResolver resolver = Minecraft.getInstance().getItemModelResolver();
 
+		//? !1.21.4
 		resolver.updateForTopItem(renderState, item, ItemDisplayContext.FIXED, world, null, 0);
+		//? 1.21.4
+		//resolver.updateForTopItem(renderState, item, ItemDisplayContext.FIXED, false, world, null, 0);
+
 		renderState.render(matrices, renderBuffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
 		//? }
 

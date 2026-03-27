@@ -1,5 +1,8 @@
 # Holoinventory Revived
 
+[![Modrinth](https://img.shields.io/modrinth/dt/1eAoo2KR?color=00AF5C&label=downloads&logo=modrinth)](https://modrinth.com/mod/holoinventory-revived)
+[![CurseForge](https://cf.way2muchnoise.eu/full_667299_downloads.svg)](https://curseforge.com/minecraft/mc-mods/holoinventory-revived)
+
 A port of the 1.12.1 HoloInventory mod to newer Minecraft versions.
 
 Ever wanted to have a simple way to see the contents of chests/machines without opening them? Tired of opening tons of chests to find the exact item you want? Now with this mod you can have a holographic display of items in storage containers!
@@ -42,6 +45,8 @@ Need help/found a bug? Open an issue on the [GitHub repo](https://github.com/che
   - [x] 1.21.4
   - [x] 1.21.5
   - [x] 1.21.6
+  - [x] 1.21.7
+  - [x] 1.21.8
 - Neoforge
   - [x] 1.21
   - [x] 1.21.1
@@ -50,6 +55,8 @@ Need help/found a bug? Open an issue on the [GitHub repo](https://github.com/che
   - [x] 1.21.4
   - [x] 1.21.5
   - [x] 1.21.6
+  - [x] 1.21.7
+  - [x] 1.21.8
 - Forge
   - [x] 1.20
   - [x] 1.20.1

@@ -14,21 +14,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-//? if >= 1.21.7
-//import net.neoforged.neoforge.client.event.RegisterClientPayloadHandlersEvent;
-
 @EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID, value = Dist.CLIENT)
 public class NeoforgeClientEventSubscriber {
-	//? if >= 1.21.7 {
-	/*@SubscribeEvent
-	public static void register(RegisterClientPayloadHandlersEvent event) {
-		event.register(
-				InventoryContentsS2CPayload.ID,
-				NeoforgeClientEventSubscriber::clientPayloadHandler
-		);
-	}
-	*///? }
-
 	@SubscribeEvent
 	//? <=1.21.5
 	//public static void onDrawLast(RenderLevelStageEvent event) {

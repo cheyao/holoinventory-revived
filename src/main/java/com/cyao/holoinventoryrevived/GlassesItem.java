@@ -33,7 +33,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 //? }
 
-//? >=1.21.5 {
+//? >=1.21.4 {
 import net.minecraft.util.Unit;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
@@ -84,9 +84,9 @@ public class GlassesItem {
 
 		//? >= 1.21 {
 
-		//? <=1.21.4
+		//? <=1.21.3
 		//ResourceLocation materialID = ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
-		//? >=1.21.5
+		//? >=1.21.4
 		ResourceKey<EquipmentAsset> materialID = ResourceKey.create(EquipmentAssets.ROOT_ID, ResourceLocation.fromNamespaceAndPath(MOD_ID, id));
 
 		//? if 1.21 || 1.21.1 {

@@ -30,7 +30,6 @@ public class NeoforgeModEventSubscriber {
 				)
 			);
 
-		//? if <=1.21.6 {
 		registrar.playToClient(
 				InventoryContentsS2CPayload.ID,
 				InventoryContentsS2CPayload.CODEC,
@@ -38,7 +37,6 @@ public class NeoforgeModEventSubscriber {
 						NeoforgeClientEventSubscriber::clientPayloadHandler
 				)
 		);
-		//? }
 	}
 
 	private static void serverPayloadHandler(final GetInventoryC2SPayload payload, final IPayloadContext context) {
