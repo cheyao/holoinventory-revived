@@ -28,13 +28,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-//? if fabric {
+//? fabric {
 /*import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-*///? } else if neoforge {
-import net.neoforged.neoforge.capabilities.Capabilities;
+*///? }
+
+//? neoforge {
+/*import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+*///? }
+
+//? forge {
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 //? }
 
 public class ClientEventHandler {
@@ -50,7 +56,10 @@ public class ClientEventHandler {
 		return !((config.ALWAYS_ACTIVE) ||
 				 (config.CONTROL_TRIGGER && Screen.hasControlDown()) ||
 				 (config.SHIFT_TRIGGER && Screen.hasShiftDown()) ||
-				 (player.getInventory().getArmor(3).is(GlassesItem.HOLO_GLASSES_ITEM)));
+				 (player.getInventory().getArmor(3).is(GlassesItem.HOLO_GLASSES_ITEM
+						 //? forge
+						 .get()
+				 )));
 	}
 
 	private static boolean isContainer(BlockPos pos) {
@@ -61,19 +70,21 @@ public class ClientEventHandler {
 		Level level = minecraft.player.level();
 		BlockEntity block = level.getBlockEntity(pos);
 
-		//? if (neoforge || forge) {
-		IItemHandler handler = level.getCapability(
-				Capabilities.ItemHandler.BLOCK,
-				pos,
-				null
-		);
+		if (block == null) {
+			return false;
+		}
+
+		//? if neoforge {
+		/*boolean handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null) != null;
+		*///? } else if forge {
+		boolean handler = block.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent();
 		//? } else {
-		/*Storage<ItemVariant> handler = ItemStorage.SIDED.find(level, pos, null);
+		/*boolean handler = ItemStorage.SIDED.find(level, pos, null) != null;
 		 *///? }
 
 		return (block instanceof Container) ||
 				(block instanceof EnderChestBlockEntity) ||
-				(handler != null);
+				handler;
 	}
 
 	public static void onTick() {

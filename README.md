@@ -33,6 +33,8 @@ Need help/found a bug? Open an issue on the [GitHub repo](https://github.com/che
 ### Versions
 
 - Fabric
+  - [x] 1.20
+  - [x] 1.20.1
   - [x] 1.21
   - [x] 1.21.1
   - [x] 1.21.2
@@ -43,5 +45,7 @@ Need help/found a bug? Open an issue on the [GitHub repo](https://github.com/che
   - [x] 1.21.2
   - [x] 1.21.3
 - Forge
+  - [x] 1.20
+  - [x] 1.20.1
 
 More to come

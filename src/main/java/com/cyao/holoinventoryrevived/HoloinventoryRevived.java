@@ -16,8 +16,13 @@ import com.cyao.holoinventoryrevived.platform.fabric.FabricNetworkClient;
 *///? }
 
 //? neoforge {
-import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
+/*import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgePlatform;
 import com.cyao.holoinventoryrevived.platform.neoforge.NeoforgeNetworkClient;
+*///? }
+
+//? forge {
+import com.cyao.holoinventoryrevived.platform.forge.ForgeNetworkClient;
+import com.cyao.holoinventoryrevived.platform.forge.ForgePlatform;
 //? }
 
 @SuppressWarnings("LoggingSimilarMessage")
@@ -67,19 +72,19 @@ public class HoloinventoryRevived {
 		//? fabric {
 		/*return new FabricPlatform();
 		*///?} neoforge {
-		return new NeoforgePlatform();
-		 //?} forge {
-		/*return new ForgePlatform();
-		*///?}
+		/*return new NeoforgePlatform();
+		 *///?} forge {
+		return new ForgePlatform();
+		//?}
 	}
 
 	private static NetworkClient createNetworkInstance() {
 		//? fabric {
 		/*return new FabricNetworkClient();
 		*///?} neoforge {
-		return new NeoforgeNetworkClient();
-		 //?} forge {
-		/*return new ForgePlatform();
-		 *///?}
+		/*return new NeoforgeNetworkClient();
+		 *///?} forge {
+		return new ForgeNetworkClient();
+		 //?}
 	}
 }

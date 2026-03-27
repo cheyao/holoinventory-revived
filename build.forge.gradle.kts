@@ -44,8 +44,6 @@ legacyForge {
 }
 
 mixin {
-	add(sourceSets.main.get(), "${prop("mod.id")}.mixins.refmap.json")
-	config("${prop("mod.id")}.mixins.json")
 }
 
 repositories {
@@ -59,11 +57,12 @@ dependencies {
 
 	implementation(libs.moulberry.mixinconstraints)
 	jarJar(libs.moulberry.mixinconstraints)
-	implementation(fletchingTable.modrinth("cloth-config", prop("deps.minecraft"), "forge"))
+	modImplementation(fletchingTable.modrinth("cloth-config", prop("deps.minecraft"), "forge"))
 
 	// Cache library
 	implementation(libs.caffeine)
 	jarJar(libs.caffeine)
+	"additionalRuntimeClasspath"(libs.caffeine)
 }
 
 sourceSets {
@@ -92,6 +91,6 @@ stonecutter {
 
 fletchingTable {
 	j52j.register("main") {
-		extension("json", "data/${prop("mod.id")}/recipe/*.json5")
+		extension("json", "data/${prop("mod.id")}/**/*.json5")
 	}
 }

@@ -49,7 +49,7 @@ public class InventoryRenderer {
 
 		String size;
 		if (item.getCount() < 1000) size = String.valueOf(item.getCount());
-		else if (item.getCount() > 1000) size = item.getCount() / 1000 + "k";
+		else if (item.getCount() < 1000_000) size = item.getCount() / 1000 + "k";
 		else size = item.getCount() / (1000_000) + "M";
 
 		int width = textRenderer.width(size);
@@ -74,9 +74,17 @@ public class InventoryRenderer {
 
 		matrices.pushPose();
 
+		//? < 1.21
+		matrices.translate(difference.x, difference.y, difference.z);
+
 		matrices.rotateAround(camera.rotation(), 0, 0, 0);
-		matrices.rotateAround(Axis.YP.rotationDegrees(180), 0, 0, 0);
-		matrices.translate(0, 0.0f, difference.length() - 0.75f);
+		//? >= 1.21
+		 //matrices.rotateAround(Axis.YP.rotationDegrees(180), 0, 0, 0);
+		//? >= 1.21
+		 //matrices.translate(0, 0.0f, difference.length() - 0.75f);
+
+		//? < 1.21
+		matrices.translate(0, 0.0f, -0.75f);
 
 		double distance = difference.length();
 		matrices.scale((float) (distance * 0.2f), (float) (distance * 0.2f), (float) (distance * 0.2f));
@@ -104,11 +112,11 @@ public class InventoryRenderer {
 		matrices.rotateAround(Axis.ZP.rotationDegrees(180), 0, 0, 0);
 
 		int width = textRenderer.width(name);
-		RenderSystem.disableDepthTest();
+		// RenderSystem.disableDepthTest();
 		textRenderer.drawInBatch(name,
 				(float) -(width / 2.0f), 0f, 0xFFFFFFFF,
 				false, matrices.last().pose(), renderBuffer,
-				Font.DisplayMode.POLYGON_OFFSET, 0, 0x00FF00FF);
+				Font.DisplayMode.POLYGON_OFFSET, 0, LightTexture.FULL_BRIGHT);
 		matrices.popPose();
 
 		int col = 0, row = 0;

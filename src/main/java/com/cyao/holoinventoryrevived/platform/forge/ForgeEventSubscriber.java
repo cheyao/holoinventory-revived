@@ -2,20 +2,19 @@ package com.cyao.holoinventoryrevived.platform.forge;
 
 //? forge {
 
-/*import com.cyao.holoinventoryrevived.event.ExampleEventHandler; // sample_content
-import net.minecraft.server.level.ServerPlayer; // sample_content
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import com.cyao.holoinventoryrevived.HoloinventoryRevived;
+import com.cyao.holoinventoryrevived.event.ClientEventHandler;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = HoloinventoryRevived.MOD_ID)
 public class ForgeEventSubscriber {
-
-	@SubscribeEvent // sample_content
-	public static void onPlayerDamage(LivingDamageEvent event) { // sample_content
-		if (event.getEntity() instanceof ServerPlayer player && event.getAmount() > 0) { // sample_content
-			ExampleEventHandler.onPlayerHurt(player); // sample_content
-		} // sample_content
-	} // sample_content
+	@SubscribeEvent
+	public static void onClientTick(TickEvent.ClientTickEvent event) {
+		if (event.phase == TickEvent.Phase.START && HoloinventoryRevived.xplat().isClient()) {
+			ClientEventHandler.onTick();
+		}
+	}
 }
-*///?}
+//?}

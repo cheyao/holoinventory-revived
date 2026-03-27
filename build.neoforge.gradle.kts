@@ -84,6 +84,6 @@ stonecutter {
 
 fletchingTable {
 	j52j.register("main") {
-		extension("json", "data/${prop("mod.id")}/recipe/*.json5")
+		extension("json", "data/${prop("mod.id")}/**/*.json5")
 	}
 }
